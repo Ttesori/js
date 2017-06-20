@@ -1,0 +1,79 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+    background:#333;
+    margin:0;
+    font-family:Avenir,Arial,sans-serif;
+}
+
+h1 {
+    margin:0;
+    padding:2em 0 1em;
+    background:#607d8b;
+    margin-bottom:1em;
+    color:#fff;
+    font-weight:normal;
+    text-align:center;
+    font-size:3em;
+    text-shadow:1px 1px 2px #222;
+}
+
+.match-grid {
+    width:600px;
+    margin:0 auto;
+    text-align:center;  
+}
+
+.match-grid .match-square {
+    width:125px;
+    height:125px;
+    text-align:center;
+    background:#ccc;
+    color:#ccc;
+    float:left;
+    margin:.15em;
+    font-size:3em;
+    line-height:125px;
+    transition: all .5s ease; 
+}
+
+
+.match-grid .match-square:hover {
+    background:#fff;
+    cursor:pointer;
+}
+
+.match-square.on {
+    color:#222;   
+}
+
+.match-grid .match-square.found {
+    background:#222;
+    color:#fff;
+    cursor:default;
+}
+
+.match-info {
+    clear:both;
+    color:#fff;
+    text-align:center;
+    padding:1em;
+    font-size:1.5em;
+}
+
+.play-again {
+    width:170px;
+    color:#000;
+    background:#fff;
+    margin:0 auto;
+    padding:1em;
+    text-align:center;
+    margin-bottom:2em;
+    visibility: hidden;
+    cursor:pointer;
+}
