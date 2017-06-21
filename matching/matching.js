@@ -20,6 +20,7 @@ function setupGame() {
     matches = ['<i class="fa fa-star" aria-hidden="true"></i>','<i class="fa fa-snowflake-o" aria-hidden="true"></i>','<i class="fa fa-anchor" aria-hidden="true"></i>','<i class="fa fa-bug" aria-hidden="true"></i>','<i class="fa fa-diamond" aria-hidden="true"></i>','<i class="fa fa-taxi" aria-hidden="true"></i>'];
     numMatches = matches.length;
     matches = matches.concat(matches);
+    // Shuffle array
     matches.sort(function(a, b){return 0.5 - Math.random()});
     
     for (var i = 0 ; i < squaresDisplay.length; i++) {
@@ -82,20 +83,6 @@ function checkMatch(card1,card2) {
     } else {
         return false;
     }
-}
-
-function shuffleArray(array) {
-  var i = 0;
-  var j = 0;
-  var temp = null;
-
-  for (i = array.length - 1; i > 0; i -= 1) {
-    j = Math.floor(Math.random() * (i + 1))
-    temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
-  }
-return array;
 }
 
 function updateScore() {
