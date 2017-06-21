@@ -1,68 +1,67 @@
-var runClock = setInterval(tick, 1000);
+var display = {
+    hourHand: document.querySelector(".hour"),
+    minHand: document.querySelector(".min"),
+    secHand: document.querySelector(".sec"),
+    timeOutput: document.querySelector(".time"),
+    updateHourHand: function (hour) {
+        var newPos = Math.floor((360 / 12) * hour);
+        this.hourHand.style.transform = this.toCSSDeg(newPos);
+    },
+    updateMinHand: function (min) {
+        var newPos = Math.floor((360 / 60) * min);
+        this.minHand.style.transform = this.toCSSDeg(newPos);
+    },
+    updateSecHand: function (sec) {
+        var newPos = Math.floor((360 / 60) * sec);
+        this.secHand.style.transform = this.toCSSDeg(newPos);
+    },
+    updateClock: function (hour,min,sec) {
+        var am = this.getPM(hour);
 
-function tick() {
-    var date;
-    var hour;
-    var min;
-    var sec;
-    var am;
+        // Update the clock readout
+        if (hour > 12) {
+            hour = hour - 12;
+        }
+        
+        this.timeOutput.textContent = this.addLeadingZero(hour) + ':' + this.addLeadingZero(min) + ':' + this.addLeadingZero(sec) + ' ' + am;
+    },
+    updateDisplay: function(hour,min,sec) {
+        // Update digital clock readout
+        this.updateClock(hour,min,sec);
 
-    // Grab elements to manipulate
-    var timeOutput = document.querySelector(".time");
-
-    // Get the current time
-    date = new Date();
-    hour = date.getHours();
-    min = date.getMinutes();
-    sec = date.getSeconds();
-    am = getPM(hour);
-
-    // Update the clock readout
-    if (hour > 12) {
-        hour = hour - 12;
+        // Update the hour, minutes, and second hands
+        this.updateHourHand(hour);
+        this.updateMinHand(min);
+        this.updateSecHand(sec);
+    },
+    toCSSDeg: function(amt) {
+        amt += 90;
+        return 'rotate(' + amt + 'deg)';
+    },
+    addLeadingZero: function(amt) {
+        if (amt < 10) {
+            amt = '0' + amt;
+        }
+        return amt;
+    },
+    getPM: function(hour) {
+        if (hour < 12) {
+            return 'AM';
+        } else {
+            return 'PM';
+        }
     }
-    timeOutput.textContent = addLeadingZero(hour) + ':' + addLeadingZero(min) + ':' + addLeadingZero(sec) + ' ' + am;
+};
 
-    // Update the hour, minutes, and second hands
-    updateHourHand(hour);
-    updateMinHand(min);
-    updateSecHand(sec);
-}
+var clock = {
+    tick: function() {
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        var sec = date.getSeconds();
+        
+        display.updateDisplay(hour,min,sec);
+    }       
+};
 
-function updateHourHand(hour) {
-    var hourHand = document.querySelector(".hour");
-    var newPos = Math.floor((360 / 12) * hour);
-    hourHand.style.transform = toCSSDeg(newPos);   
-}
-
-function updateMinHand(min) {
-    var minHand = document.querySelector(".min");
-    var newPos = Math.floor((360 / 60) * min);
-    minHand.style.transform = toCSSDeg(newPos);   
-}
-
-function updateSecHand(sec) {
-    var secHand = document.querySelector(".sec");
-    var newPos = Math.floor((360 / 60) * sec);
-    secHand.style.transform = toCSSDeg(newPos);   
-}
-
-function toCSSDeg(amt) {
-    amt += 90
-    return 'rotate(' + amt + 'deg)';
-}
-
-function addLeadingZero(amt) {
-    if (amt < 10) {
-        amt = '0' + amt;
-    }
-    return amt;
-}
-
-function getPM(hour) {
-    if (hour < 12) {
-        return 'AM';
-    } else {
-        return 'PM';
-    }
-}
+var runClock = setInterval(clock.tick, 1000);
