@@ -55,23 +55,27 @@ h1 {
     margin:0 auto;
 }
 
+.transition-fix {
+    transition:none !important;
+}
+
 .hour {
     background:#cddc39;
-    transform:rotate(15deg);
+    transform:rotate(90deg);
     width:30%;
     left:20%;
 }
 
 .min {
     background:#26c6da;
-    transform:rotate(30deg);
+    transform:rotate(90deg);
     width:40%;
     left:10%;
 }
 
 .sec {
     background:#ffca28;
-    transform:rotate(45deg);
+    transform:rotate(90deg);
     width:45%;
     left:5%;
     height:3px;
