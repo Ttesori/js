@@ -1,65 +1,155 @@
 /*
 Project: Bullet Journal-style tasklist
 
-Iteration 1
-- The user should see a list of current tasks
-- The user should be able to add a task
-- The user should be able to cross off completed tasks
-- The user should be able to delete tasks
-
 Iteration 2
-- The user should be able to select a category for the task (todo, note, event)
 - The user should be able to edit an item
-- The user should be able to add an item inline
 - Tasks should persist in local storage
 
-Iteration 3
-
+TODOs
+(x) Create data structure for task list
+(x) Create functions for saving data to and loading data from local storage
+(x) Update create and delete functions to update local storage as well
+(x) Allow user to change title of list, persist to local storage
+() Clean up JS
+() Clean up CSS
+() Fix select box width
 
 */
+// Task List
+let dbjLists, currEdit;
 
 // Get UI Variables
-const dbjList = document.querySelector('.dbj-list');
+const dbjListElement = document.querySelector('.dbj-list');
+const dbjTitleAdd = document.querySelector('.dbj-title-add');
 const dbjInputAdd = document.querySelector('.dbj-input-add');
+const dbjAddType = document.querySelector('.dbj-add-type');
 const dbjBtnAdd = document.querySelector('.dbj-btn-add');
 const dbjDeleteHTML =
-  '<a href="#" class="dbj-btn-delete"><span aria-hidden="true" class="text-danger">&times;</span></a> ';
-const dbjBtnDelete = document.querySelector('.dbj-btn-delete');
+  '<a href="#" class="dbj-btn-delete btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a> ';
+const dbjEditHTML =
+  '<a href="#" class="dbj-btn-edit btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i></a> ';
+const dbjListName = document.querySelector('.dbj-list-label');
+const dbjBtnClear = document.querySelector('.dbj-btn-clear');
 
-// Set up event listeners
-dbjBtnAdd.addEventListener('click', addTask);
-dbjList.addEventListener('click', function(e) {
-  // If delete button is target, delete
-  if (e.target.parentElement.nodeName === 'A') {
-    deleteTask(e);
-  } else {
-    // Disable task
-    disableTask(e);
+// Initialize application
+init();
+
+function init() {
+  // Set up variables
+  dbjLists = [];
+  currEdit = -1;
+
+  // Set up event listeners
+  // Add Task Button
+  dbjBtnAdd.addEventListener('click', function(e) {
+    if (e.target.textContent === 'Update Task') {
+      updateTask();
+    } else {
+      addTask();
+    }
+  });
+  // Capture clicks on list items
+  dbjListElement.addEventListener('click', function(e) {
+    // If delete button is target, delete
+    if (e.target.parentElement.classList.contains('dbj-btn-delete')) {
+      console.log('deleting task');
+      deleteTask(e);
+    } else if (e.target.parentElement.classList.contains('dbj-btn-edit')) {
+      editTask(e);
+    } else {
+      // Disable task
+      disableTask(e);
+    }
+  });
+  dbjListName.addEventListener('input', updateListName);
+  dbjBtnClear.addEventListener('click', clearList);
+
+  // Load data from LS
+  // List title
+  if (localStorage.getItem('dbj-tasks-title')) {
+    dbjListName.textContent = localStorage.getItem('dbj-tasks-title');
   }
-});
+  // List content
+  if (localStorage.getItem('dbj-tasks')) {
+    dbjLists = getFromLS();
+    listTasks();
+  }
+}
 
 // Add a new task
 function addTask() {
   const textTask = dbjInputAdd.value;
+  const taskType = dbjAddType.value;
+
   // If task input isn't empty
   if (textTask !== '') {
-    // Create new task <li>
-    const newTask = document.createElement('li');
-    newTask.appendChild(document.createTextNode(textTask));
-    newTask.className = 'list-group-item d-flex justify-content-between';
+    // Create data
+    const newTask = {
+      type: taskType,
+      text: textTask
+    };
+    dbjLists.push(newTask);
+    saveToLS();
 
-    // Append delete button
-    const btnDeleteTask = document.createElement('div');
-    btnDeleteTask.className = 'dbj-delete';
-    btnDeleteTask.innerHTML = dbjDeleteHTML;
-    newTask.appendChild(btnDeleteTask);
-
-    // Add task to list
-    dbjList.appendChild(newTask);
+    // Rebuild task list
+    listTasks();
 
     // Clear input
+    dbjAddType.value = 'task';
     dbjInputAdd.value = '';
   }
+}
+
+function updateTask() {
+  const textTask = dbjInputAdd.value;
+  const taskType = dbjAddType.value;
+
+  if (textTask !== '' && currEdit !== -1) {
+    dbjLists[currEdit].type = taskType;
+    dbjLists[currEdit].text = textTask;
+
+    // Save to LS and rebuild list
+    saveToLS();
+    listTasks();
+
+    // Reset add form
+    currEdit = -1;
+    dbjAddType.value = 'task';
+    dbjInputAdd.value = '';
+    dbjBtnAdd.textContent = 'Add a Task';
+    dbjTitleAdd.textContent = 'Add Item';
+  }
+}
+
+// Build task list
+function listTasks() {
+  // Clear current list
+  dbjListElement.innerHTML = '';
+  dbjLists.forEach(function(task, index) {
+    // Create new task <li>
+    const newTask = document.createElement('li');
+    // Set classes
+    newTask.className =
+      'list-group-item d-flex justify-content-between dbj-item dbj-' +
+      task.type +
+      ' dbj-task-' +
+      index;
+
+    // Create and add task text
+    const taskText = document.createElement('span');
+    taskText.appendChild(document.createTextNode(task.text));
+    taskText.className = 'dbj-task-text';
+    newTask.appendChild(taskText);
+
+    // Append edit and delete buttons
+    const btnManageTask = document.createElement('div');
+    btnManageTask.className = 'dbj-manage';
+    btnManageTask.innerHTML = dbjEditHTML + dbjDeleteHTML;
+    newTask.appendChild(btnManageTask);
+
+    // Add task to list
+    dbjListElement.appendChild(newTask);
+  });
 }
 
 // Cross off a task
@@ -68,10 +158,73 @@ function disableTask(e) {
     e.target.classList.toggle('disabled');
   }
 }
+// Edit a task
+function editTask(e) {
+  const taskNumToEdit = getItemNumber(e);
+  const taskToEdit = dbjLists[taskNumToEdit];
+
+  dbjAddType.value = taskToEdit.type;
+  dbjInputAdd.value = taskToEdit.text;
+  dbjBtnAdd.textContent = 'Update Task';
+  dbjTitleAdd.textContent = 'Update Task';
+
+  currEdit = taskNumToEdit;
+
+  e.preventDefault();
+}
 
 // Delete a task
 function deleteTask(e) {
-  const taskToDelete = e.target.parentElement.parentElement.parentElement;
-  taskToDelete.remove();
+  // remove task from data structure
+  dbjLists.splice(getItemNumber(e), 1);
+
+  // Save to LS
+  saveToLS();
+
+  // rebuild list output
+  listTasks();
+
+  //taskToDelete.remove();
   e.preventDefault();
+}
+
+// Clear list
+function clearList() {
+  dbjListName.textContent = 'Tasks';
+  dbjListElement.innerHTML = '';
+  localStorage.removeItem('dbj-tasks');
+  localStorage.removeItem('dbj-tasks-title');
+}
+
+// Get clicked item number
+function getItemNumber(e) {
+  const taskToManage = e.target.parentElement.parentElement.parentElement;
+  const toManageClasses = taskToManage.className;
+  // Extract class name
+  let matches = toManageClasses
+    .match(/dbj-task-(\d)/g)
+    .toString()
+    .split('-');
+  // Extract number
+  return matches[2];
+}
+
+function updateListName() {
+  // Save to local storage
+  localStorage.setItem('dbj-tasks-title', dbjListName.textContent);
+}
+
+// Save list to local storage
+function saveToLS() {
+  localStorage.setItem('dbj-tasks', JSON.stringify(dbjLists));
+}
+
+// Load list from local storage
+function getFromLS() {
+  const currData = JSON.parse(localStorage.getItem('dbj-tasks'));
+  if (currData !== null) {
+    return currData;
+  } else {
+    return '';
+  }
 }

@@ -1,0 +1,8 @@
+.dbj-list .disabled {
+  text-decoration: line-through;
+}
+
+.dbj-list .disabled span {
+  display: inline-block;
+  text-decoration: none;
+}

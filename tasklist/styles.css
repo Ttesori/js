@@ -1,8 +1,92 @@
-.dbj-list .disabled {
-  text-decoration: line-through;
+html,
+body {
+  height: 100%;
+}
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+  background: linear-gradient(rgba(55, 71, 79, 0.5), black),
+    url('blurred.jpg') no-repeat top center;
+  background-size: cover;
+  color: #263238;
 }
 
-.dbj-list .disabled span {
+.dbj-list .disabled .dbj-task-text {
+  color: #999;
+}
+
+.dbj-list .disabled .dbj-manage span {
   display: inline-block;
   text-decoration: none;
+}
+
+.dbj-list .dbj-item .dbj-task-text::before {
+  padding-right: 1em;
+  font-size: 1.5rem;
+  height: 15px;
+}
+.dbj-list .dbj-task .dbj-task-text::before {
+  content: '\2022 ';
+}
+
+.dbj-list .dbj-event .dbj-task-text::before {
+  content: '\00bb ';
+}
+
+.dbj-list .dbj-note .dbj-task-text::before {
+  content: '\2013 ';
+}
+
+.dbj-list .list-group-item {
+  cursor: pointer;
+}
+
+.dbj-manage .btn {
+  font-size: 1.25em;
+  padding: 0.15em 0.5em;
+}
+
+.dbj-item .dbj-task-text {
+  padding-top: 0.2rem;
+  font-size: 1.2rem;
+}
+
+.dbj-btn-clear,
+.dbj-btn-add {
+}
+
+.dbj-list .dbj-item .dbj-manage {
+  opacity: 0;
+  transition: all 0.2s;
+}
+.dbj-container .card {
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.4);
+}
+
+.dbj-list .dbj-item {
+}
+
+.dbj-list .dbj-item:hover .dbj-manage {
+  opacity: 1;
+}
+
+.jumbotron {
+  background-color: rgb(38, 50, 56, 0.6);
+  color: #fff;
+  text-align: center;
+  padding-bottom: 2.5rem;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.jumbotron h1 {
+  font-family: Kalam;
+}
+
+.dbj-container h2,
+.dbj-container h3 {
+  font-weight: normal;
+  font-family: Kalam;
+}
+
+.dbj-container h2 {
+  font-size: 2.5rem;
 }
