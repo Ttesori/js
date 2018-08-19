@@ -13,6 +13,7 @@ TODOs
 () Clean up JS
 () Clean up CSS
 () Fix select box width
+() Fade in/out highlights
 
 */
 // Task List
@@ -25,9 +26,9 @@ const dbjInputAdd = document.querySelector('.dbj-input-add');
 const dbjAddType = document.querySelector('.dbj-add-type');
 const dbjBtnAdd = document.querySelector('.dbj-btn-add');
 const dbjDeleteHTML =
-  '<a href="#" class="dbj-btn-delete btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></a> ';
+  '<a href="#" class="dbj-btn-delete btn btn-danger" title="Delete Item"></a> ';
 const dbjEditHTML =
-  '<a href="#" class="dbj-btn-edit btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i></a> ';
+  '<a href="#" class="dbj-btn-edit btn btn-info" title="Edit Item"></a> ';
 const dbjListName = document.querySelector('.dbj-list-label');
 const dbjBtnClear = document.querySelector('.dbj-btn-clear');
 
@@ -51,10 +52,9 @@ function init() {
   // Capture clicks on list items
   dbjListElement.addEventListener('click', function(e) {
     // If delete button is target, delete
-    if (e.target.parentElement.classList.contains('dbj-btn-delete')) {
-      console.log('deleting task');
+    if (e.target.classList.contains('dbj-btn-delete')) {
       deleteTask(e);
-    } else if (e.target.parentElement.classList.contains('dbj-btn-edit')) {
+    } else if (e.target.classList.contains('dbj-btn-edit')) {
       editTask(e);
     } else {
       // Disable task
@@ -100,9 +100,10 @@ function addTask() {
   }
 }
 
-function updateTask() {
+function updateTask(taskNum) {
   const textTask = dbjInputAdd.value;
   const taskType = dbjAddType.value;
+  const taskToUpdate = dbjBtnAdd.dataset.task;
 
   if (textTask !== '' && currEdit !== -1) {
     dbjLists[currEdit].type = taskType;
@@ -112,8 +113,16 @@ function updateTask() {
     saveToLS();
     listTasks();
 
+    // Highlight changed element
+    const updatedTask = document.querySelector('.dbj-task-' + taskToUpdate);
+    updatedTask.classList.add('highlight');
+    setTimeout(() => {
+      updatedTask.classList.remove('highlight');
+    }, 3000);
+
     // Reset add form
     currEdit = -1;
+    dbjBtnAdd.classList.remove('dbj-btn-update');
     dbjAddType.value = 'task';
     dbjInputAdd.value = '';
     dbjBtnAdd.textContent = 'Add a Task';
@@ -130,10 +139,7 @@ function listTasks() {
     const newTask = document.createElement('li');
     // Set classes
     newTask.className =
-      'list-group-item d-flex justify-content-between dbj-item dbj-' +
-      task.type +
-      ' dbj-task-' +
-      index;
+      'list-group-item  dbj-item dbj-' + task.type + ' dbj-task-' + index;
 
     // Create and add task text
     const taskText = document.createElement('span');
@@ -154,19 +160,28 @@ function listTasks() {
 
 // Cross off a task
 function disableTask(e) {
-  if (e.target.classList.contains('list-group-item')) {
+  if (e.target.classList.contains('dbj-item')) {
     e.target.classList.toggle('disabled');
+  } else if (e.target.parentElement.classList.contains('dbj-item')) {
+    e.target.parentElement.classList.toggle('disabled');
   }
 }
 // Edit a task
 function editTask(e) {
   const taskNumToEdit = getItemNumber(e);
   const taskToEdit = dbjLists[taskNumToEdit];
+  const dbjAddContainer = document.querySelector('.dbj-add-container');
 
   dbjAddType.value = taskToEdit.type;
   dbjInputAdd.value = taskToEdit.text;
   dbjBtnAdd.textContent = 'Update Task';
+  dbjBtnAdd.classList.add('dbj-btn-update');
+  dbjBtnAdd.setAttribute('data-task', taskNumToEdit);
   dbjTitleAdd.textContent = 'Update Task';
+  dbjAddContainer.classList.add('highlight');
+  setTimeout(() => {
+    dbjAddContainer.classList.remove('highlight');
+  }, 3000);
 
   currEdit = taskNumToEdit;
 
@@ -198,7 +213,7 @@ function clearList() {
 
 // Get clicked item number
 function getItemNumber(e) {
-  const taskToManage = e.target.parentElement.parentElement.parentElement;
+  const taskToManage = e.target.parentElement.parentElement;
   const toManageClasses = taskToManage.className;
   // Extract class name
   let matches = toManageClasses

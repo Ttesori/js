@@ -3,11 +3,15 @@ body {
   height: 100%;
 }
 body {
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Roboto Slab', serif;
   background: linear-gradient(rgba(55, 71, 79, 0.5), black),
     url('blurred.jpg') no-repeat top center;
   background-size: cover;
   color: #263238;
+}
+
+.dbj-container {
+  max-width: 800px;
 }
 
 .dbj-list .disabled .dbj-task-text {
@@ -20,9 +24,20 @@ body {
 }
 
 .dbj-list .dbj-item .dbj-task-text::before {
-  padding-right: 1em;
   font-size: 1.5rem;
-  height: 15px;
+  padding-right: 1em;
+  width: 2em;
+  display: inline-block;
+  height: 100%;
+}
+
+.dbj-manage {
+  position: absolute;
+  right: 1em;
+  top: 0.7em;
+}
+
+.dbj-list .dbj-item .dbj-task-text {
 }
 .dbj-list .dbj-task .dbj-task-text::before {
   content: '\2022 ';
@@ -38,6 +53,7 @@ body {
 
 .dbj-list .list-group-item {
   cursor: pointer;
+  position: relative;
 }
 
 .dbj-manage .btn {
@@ -50,8 +66,46 @@ body {
   font-size: 1.2rem;
 }
 
-.dbj-btn-clear,
-.dbj-btn-add {
+.dbj-btn-edit::before {
+  content: '\f040';
+  font-family: FontAwesome;
+  -webkit-font-smoothing: antialiased;
+}
+.dbj-list-label {
+  transition: all 0.2s ease-in-out;
+}
+
+.dbj-list-label:hover {
+  background: #f9fbe7;
+}
+
+.dbj-btn-delete::before {
+  content: '\f014';
+  font-family: FontAwesome;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dbj-btn-clear::before {
+  content: '\f1f8';
+  font-family: 'FontAwesome';
+  padding-right: 0.5em;
+}
+
+.dbj-btn-clear:hover {
+  background: #d32f2f;
+  border-color: #d32f2f;
+}
+
+.dbj-btn-add::before {
+  content: '\f067';
+  font-family: 'FontAwesome';
+  padding-right: 0.5em;
+}
+
+.dbj-btn-update::before {
+  content: '\f093';
+  font-family: 'FontAwesome';
+  padding-right: 0.5em;
 }
 
 .dbj-list .dbj-item .dbj-manage {
@@ -74,19 +128,46 @@ body {
   color: #fff;
   text-align: center;
   padding-bottom: 2.5rem;
-  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 25px rgba(0, 0, 0, 0.8);
 }
 
-.jumbotron h1 {
-  font-family: Kalam;
+.jumbotron h1,
+.dbj-container h2,
+.dbj-container h3 {
+  font-family: 'Roboto';
+  font-weight: 300;
+}
+
+.jumbotron .lead::after {
+  content: '\f246';
+  font-family: FontAwesome;
+  opacity: 0.3;
+  padding-left: 0.25em;
 }
 
 .dbj-container h2,
 .dbj-container h3 {
-  font-weight: normal;
-  font-family: Kalam;
+  font-weight: 400;
 }
 
 .dbj-container h2 {
-  font-size: 2.5rem;
+}
+
+.dbj-container h3 {
+  font-size: 1.5rem;
+}
+
+.highlight {
+  animation: highlight 0.75s ease-in-out;
+}
+
+@keyframes highlight {
+  from {
+    background: #f0f4c3;
+    transform: scale(1.01);
+  }
+  to {
+    background: transparent;
+    transform: scale(1);
+  }
 }

@@ -9,8 +9,7 @@
     crossorigin="anonymous">
   <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
     crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Kalam" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300|Roboto:300,400" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <title>Task List</title>
 </head>
@@ -22,18 +21,17 @@
       <p class="lead">Easily organize today's tasks, events, and notes.</p>
     </div>
   </header>
-  <div class="container dbj-container">
+  <div class="container dbj-container mt-4">
 
     <main>
       <div class="card">
         <div class="card-body">
           <header class="row">
-            <div class="col-md-9">
-              <h2 class="dbj-list-label" contenteditable="true">Tasks</h2>
+            <div class="col-7 col-md-9">
+              <h2 class="dbj-list-label p-1" contenteditable="true">Tasks</h2>
             </div>
-            <div class="col-md-3 text-right">
-              <button type="button" class="btn btn-outline-secondary dbj-btn-clear">
-                <i class="fa fa-trash" aria-hidden="true"></i> Clear List</button>
+            <div class="col-5 col-md-3 text-md-right">
+              <button type="button" class="btn btn-outline-secondary dbj-btn-clear">Clear List</button>
             </div>
 
           </header>
@@ -44,17 +42,22 @@
 
 
       <div class="card mt-3">
-        <div class="card-body">
+        <div class="card-body dbj-add-container">
           <h3 class="dbj-title-add">Add A Task</h3>
-          <form class="d-flex">
-            <select class="form-control dbj-add-type mr-2 flex-shrink-1">
-              <option value="task">Task (&bull;)</option>
-              <option value="event">Event (&#187;)</option>
-              <option value="note">Note (&ndash;)</option>
-            </select>
-            <input type="text" class="form-control dbj-input-add flex-grow-1  mr-2" placeholder="Item text here...">
-            <button class="btn btn-info dbj-btn-add" type="button">
-              <i class="fa fa-plus" aria-hidden="true"></i> Add Item</button>
+          <form class="">
+            <div class="form-row">
+              <div class="col">
+                <select class="form-control dbj-add-type mr-2">
+                  <option value="task">Task (&bull;)</option>
+                  <option value="event">Event (&#187;)</option>
+                  <option value="note">Note (&ndash;)</option>
+                </select>
+              </div>
+              <div class="col-8">
+                <input type="text" class="form-control dbj-input-add  mr-2" placeholder="Item text here...">
+              </div>
+            </div>
+            <button class="btn btn-info dbj-btn-add mt-2 float-right" type="button">Add Item</button>
           </form>
 
         </div>
