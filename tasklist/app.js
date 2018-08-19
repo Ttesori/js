@@ -13,7 +13,8 @@ TODOs
 () Clean up JS
 () Clean up CSS
 () Fix select box width
-() Fade in/out highlights
+(x) Fade in/out highlights
+() Add success message
 
 */
 // Task List

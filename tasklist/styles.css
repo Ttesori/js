@@ -111,6 +111,7 @@ body {
 .dbj-list .dbj-item .dbj-manage {
   opacity: 0;
   transition: all 0.2s;
+  visibility: hidden;
 }
 .dbj-container .card {
   box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.4);
@@ -121,10 +122,11 @@ body {
 
 .dbj-list .dbj-item:hover .dbj-manage {
   opacity: 1;
+  visibility: visible;
 }
 
 .jumbotron {
-  background-color: rgb(38, 50, 56, 0.6);
+  background-color: rgba(38, 50, 56, 0.6);
   color: #fff;
   text-align: center;
   padding-bottom: 2.5rem;
