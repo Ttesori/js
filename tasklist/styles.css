@@ -1,13 +1,12 @@
-html,
 body {
   height: 100%;
-}
-body {
   font-family: 'Roboto Slab', serif;
+  background-color: #000;
   background: linear-gradient(rgba(55, 71, 79, 0.5), black),
     url('blurred.jpg') no-repeat top center;
   background-size: cover;
   color: #263238;
+  padding-bottom: 2rem;
 }
 
 .dbj-container {
