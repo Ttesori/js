@@ -30,8 +30,13 @@ const dbjDeleteHTML =
   '<a href="#" class="dbj-btn-delete btn btn-danger" title="Delete Item"></a> ';
 const dbjEditHTML =
   '<a href="#" class="dbj-btn-edit btn btn-info" title="Edit Item"></a> ';
+const dbjDoneHTML =
+  '<a href="#" class="dbj-btn-done btn btn-success" title="Item Complete"></a> ';
 const dbjListName = document.querySelector('.dbj-list-label');
 const dbjBtnClear = document.querySelector('.dbj-btn-clear');
+const dbjEmptyHTML =
+  '<div class="alert alert-light dbj-msg-empty">Your list is empty. Add some tasks below and they will appear here.</div>';
+const dbjAddError = 'Error: Item text cannot be empty.';
 
 // Initialize application
 init();
@@ -57,7 +62,7 @@ function init() {
       deleteTask(e);
     } else if (e.target.classList.contains('dbj-btn-edit')) {
       editTask(e);
-    } else {
+    } else if (e.target.classList.contains('dbj-btn-done')) {
       // Disable task
       disableTask(e);
     }
@@ -69,6 +74,8 @@ function init() {
   // List title
   if (localStorage.getItem('dbj-tasks-title')) {
     dbjListName.textContent = localStorage.getItem('dbj-tasks-title');
+  } else {
+    dbjListElement.innerHTML = dbjEmptyHTML;
   }
   // List content
   if (localStorage.getItem('dbj-tasks')) {
@@ -81,13 +88,15 @@ function init() {
 function addTask() {
   const textTask = dbjInputAdd.value;
   const taskType = dbjAddType.value;
+  const dbjAddMsg = document.querySelector('.dbj-add-message');
 
   // If task input isn't empty
   if (textTask !== '') {
     // Create data
     const newTask = {
       type: taskType,
-      text: textTask
+      text: textTask,
+      complete: 0
     };
     dbjLists.push(newTask);
     saveToLS();
@@ -95,9 +104,23 @@ function addTask() {
     // Rebuild task list
     listTasks();
 
+    // Highlight new item
+    const addedTask = document.querySelector(
+      '.dbj-task-' + (dbjLists.length - 1)
+    );
+    addedTask.classList.add('highlight');
+    setTimeout(() => {
+      added.classList.remove('highlight');
+    }, 3000);
+
     // Clear input
     dbjAddType.value = 'task';
     dbjInputAdd.value = '';
+    dbjAddMsg.style = '';
+  } else {
+    // Display error message
+    dbjAddMsg.innerHTML = dbjAddError;
+    dbjAddMsg.style = 'opacity:1;display:block';
   }
 }
 
@@ -134,13 +157,25 @@ function updateTask(taskNum) {
 // Build task list
 function listTasks() {
   // Clear current list
-  dbjListElement.innerHTML = '';
+  if (dbjLists.length === 0) {
+    // If list is empty, display empty message
+    dbjListElement.innerHTML = dbjEmptyHTML;
+  } else {
+    dbjListElement.innerHTML = '';
+  }
+
+  console.log(localStorage.getItem('dbj-order'));
+
   dbjLists.forEach(function(task, index) {
     // Create new task <li>
     const newTask = document.createElement('li');
     // Set classes
     newTask.className =
       'list-group-item  dbj-item dbj-' + task.type + ' dbj-task-' + index;
+    if (task.complete === 1) {
+      newTask.classList.add('disabled');
+    }
+    newTask.dataset.index = index;
 
     // Create and add task text
     const taskText = document.createElement('span');
@@ -151,7 +186,7 @@ function listTasks() {
     // Append edit and delete buttons
     const btnManageTask = document.createElement('div');
     btnManageTask.className = 'dbj-manage';
-    btnManageTask.innerHTML = dbjEditHTML + dbjDeleteHTML;
+    btnManageTask.innerHTML = dbjDoneHTML + dbjEditHTML + dbjDeleteHTML;
     newTask.appendChild(btnManageTask);
 
     // Add task to list
@@ -161,11 +196,23 @@ function listTasks() {
 
 // Cross off a task
 function disableTask(e) {
-  if (e.target.classList.contains('dbj-item')) {
-    e.target.classList.toggle('disabled');
-  } else if (e.target.parentElement.classList.contains('dbj-item')) {
-    e.target.parentElement.classList.toggle('disabled');
+  const taskNumToDisable = getItemNumber(e);
+  const taskToDisable = document.querySelector('.dbj-task-' + taskNumToDisable);
+  e.preventDefault();
+
+  if (dbjLists[taskNumToDisable].complete === 0) {
+    // Disable in data structure
+    dbjLists[taskNumToDisable].complete = 1;
+    // Add disabled class
+    taskToDisable.classList.add('disabled');
+  } else {
+    // Enable in data structure
+    dbjLists[taskNumToDisable].complete = 0;
+    // Remove disabled class
+    taskToDisable.classList.remove('disabled');
   }
+  // Save to LS
+  saveToLS();
 }
 // Edit a task
 function editTask(e) {
@@ -206,8 +253,9 @@ function deleteTask(e) {
 
 // Clear list
 function clearList() {
+  dbjLists = [];
   dbjListName.textContent = 'Tasks';
-  dbjListElement.innerHTML = '';
+  dbjListElement.innerHTML = dbjEmptyHTML;
   localStorage.removeItem('dbj-tasks');
   localStorage.removeItem('dbj-tasks-title');
 }
