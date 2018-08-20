@@ -91,7 +91,7 @@ body {
 
 .dbj-container .dbj-list .dbj-item .dbj-task-text::before {
   font-size: 1.5rem;
-  padding-right: 1em;
+  padding-right: 0.75em;
   width: 2em;
   display: inline-block;
   height: 100%;
