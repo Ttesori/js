@@ -4,8 +4,8 @@ body {
   color: #263238;
   padding-bottom: 5rem;
   background-color: #000000;
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(55, 71, 79, 0.5)), to(#000000)), url("blurred.jpg") no-repeat top center;
-  background: linear-gradient(rgba(55, 71, 79, 0.5), #000000), url("blurred.jpg") no-repeat top center;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(55, 71, 79, 0.5)), to(#000000)), url("img/blurred.jpg") no-repeat top center;
+  background: linear-gradient(rgba(55, 71, 79, 0.5), #000000), url("img/blurred.jpg") no-repeat top center;
   background-attachment: fixed;
   background-size: cover;
 }
