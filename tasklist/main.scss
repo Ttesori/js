@@ -1,0 +1,212 @@
+// Colors
+$black: #000000;
+$darkest-neutral: #263238;
+$dark-neutral: #455a64;
+$medium-neutral: #607d8b;
+$light-neutral: #b0bec5;
+$lightest-neutral: #eceff1;
+$warning: #d32f2f;
+$highlight: #f9fbe7;
+
+// Variables
+$font-copy: 'Roboto Slab', serif;
+$font-headings: 'Roboto', sans-serif;
+$font-icons: 'FontAwesome';
+
+body {
+  height: 100%;
+  font-family: $font-copy;
+  color: $darkest-neutral;
+  padding-bottom: 5rem;
+  background-color: $black;
+  background: linear-gradient(rgba(55, 71, 79, 0.5), $black),
+    url('blurred.jpg') no-repeat top center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Header/Jumbotron Styles */
+.dbj-jumbotron {
+  background: none;
+  background-color: rgba(38, 50, 56, 0.6);
+  color: #fff;
+  text-align: center;
+  padding-bottom: 2.5rem;
+  text-shadow: 2px 2px 25px rgba(0, 0, 0, 0.8);
+
+  h1 {
+    font-family: $font-headings;
+    font-weight: 300;
+  }
+  /* Cursor Icon after subtitle */
+  .lead::after {
+    content: '\f246';
+    font-family: $font-icons;
+    color: $medium-neutral;
+    padding-left: 0.25em;
+  }
+}
+
+.dbj-container {
+  max-width: 800px;
+  .dbj-list-container,
+  .dbj-add-container {
+    box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.4);
+  }
+
+  .dbj-list {
+    /* List Title */
+    .dbj-list-label {
+      transition: all 0.2s ease-in-out;
+      font-family: $font-headings;
+      font-weight: 400;
+      &:hover {
+        background: $highlight;
+      }
+    }
+    /* Clear Button */
+    .dbj-btn-clear::before {
+      &::before {
+        content: '\f1f8';
+        font-family: $font-icons;
+        padding-right: 0.5em;
+      }
+      &:hover {
+        background: $warning;
+        border-color: $warning;
+      }
+    }
+    /* List Item Styles */
+    .dbj-item {
+      position: relative;
+      cursor: pointer;
+      .dbj-task-text {
+        transition: all 0.5s;
+        padding-top: 0.2rem;
+        font-size: 1.2rem;
+        &::before {
+          font-size: 1.5rem;
+          padding-right: 1em;
+          width: 2em;
+          display: inline-block;
+          height: 100%;
+        }
+      }
+      &:hover .dbj-manage {
+        opacity: 1;
+        visibility: visible;
+      }
+      /* Buttons to manage list item */
+      .dbj-manage {
+        position: absolute;
+        right: 1em;
+        top: 0.7em;
+        opacity: 0;
+        transition: all 0.2s;
+        visibility: hidden;
+
+        .btn {
+          font-size: 1.25em;
+          padding: 0.15em 0.5em;
+        }
+        .dbj-btn-edit {
+          &::before {
+            content: '\f040';
+            font-family: $font-icons;
+            -webkit-font-smoothing: antialiased;
+          }
+        }
+        .dbj-btn-done {
+          &::before {
+            content: '\f00c';
+            font-family: $font-icons;
+          }
+        }
+        .dbj-btn-delete {
+          &::before {
+            content: '\f014';
+            font-family: $font-icons;
+            -webkit-font-smoothing: antialiased;
+          }
+        }
+      }
+    }
+    /* List Item Type Icons */
+    .dbj-task .dbj-task-text::before {
+      content: '\2022';
+    }
+
+    .dbj-event .dbj-task-text::before {
+      content: '\00bb';
+    }
+
+    .dbj-note .dbj-task-text::before {
+      content: '\2013';
+    }
+    /* Message if list is empty */
+    .dbj-msg-empty {
+      border: 1px dotted $light-neutral;
+    }
+  }
+
+  /* Disabled Item Styles */
+  .disabled {
+    .dbj-task-text {
+      color: $light-neutral;
+      text-decoration: line-through;
+    }
+    .dbj-manage {
+    }
+  }
+
+  /* Add Item Styles */
+  .dbj-add-container {
+    .dbj-title-add {
+      font-family: $font-headings;
+      font-weight: 400;
+      font-size: 1.5rem;
+    }
+    .dbj-add-message {
+      display: none;
+      opacity: 0;
+      transition: all 1s;
+    }
+    .dbj-btn-add::before {
+      content: '\f067';
+      font-family: $font-icons;
+      padding-right: 0.5em;
+    }
+
+    .dbj-btn-update::before {
+      content: '\f093';
+      font-family: $font-icons;
+      padding-right: 0.5em;
+    }
+  }
+
+  /* Footer */
+  .dbj-footer {
+    text-align: center;
+
+    a {
+      color: #455a64;
+      text-decoration: none;
+      font-size: 3rem;
+    }
+  }
+}
+/* Utility Classes */
+.highlight {
+  animation: highlight 0.75s ease-in-out;
+}
+
+@keyframes highlight {
+  from {
+    background: $highlight;
+    transform: scale(1.01);
+  }
+  to {
+    background: transparent;
+    transform: scale(1);
+  }
+}

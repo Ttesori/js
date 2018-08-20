@@ -1,0 +1,224 @@
+body {
+  height: 100%;
+  font-family: "Roboto Slab", serif;
+  color: #263238;
+  padding-bottom: 5rem;
+  background-color: #000000;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(55, 71, 79, 0.5)), to(#000000)), url("blurred.jpg") no-repeat top center;
+  background: linear-gradient(rgba(55, 71, 79, 0.5), #000000), url("blurred.jpg") no-repeat top center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+/* Header/Jumbotron Styles */
+.dbj-jumbotron {
+  background: none;
+  background-color: rgba(38, 50, 56, 0.6);
+  color: #fff;
+  text-align: center;
+  padding-bottom: 2.5rem;
+  text-shadow: 2px 2px 25px rgba(0, 0, 0, 0.8);
+  /* Cursor Icon after subtitle */
+}
+
+.dbj-jumbotron h1 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+}
+
+.dbj-jumbotron .lead::after {
+  content: '\f246';
+  font-family: "FontAwesome";
+  color: #607d8b;
+  padding-left: 0.25em;
+}
+
+.dbj-container {
+  max-width: 800px;
+  /* Disabled Item Styles */
+  /* Add Item Styles */
+  /* Footer */
+}
+
+.dbj-container .dbj-list-container,
+.dbj-container .dbj-add-container {
+  -webkit-box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.4);
+          box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.4);
+}
+
+.dbj-container .dbj-list {
+  /* List Title */
+  /* Clear Button */
+  /* List Item Styles */
+  /* List Item Type Icons */
+  /* Message if list is empty */
+}
+
+.dbj-container .dbj-list .dbj-list-label {
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+.dbj-container .dbj-list .dbj-list-label:hover {
+  background: #f9fbe7;
+}
+
+.dbj-container .dbj-list .dbj-btn-clear::before::before {
+  content: '\f1f8';
+  font-family: "FontAwesome";
+  padding-right: 0.5em;
+}
+
+.dbj-container .dbj-list .dbj-btn-clear::before:hover {
+  background: #d32f2f;
+  border-color: #d32f2f;
+}
+
+.dbj-container .dbj-list .dbj-item {
+  position: relative;
+  cursor: pointer;
+  /* Buttons to manage list item */
+}
+
+.dbj-container .dbj-list .dbj-item .dbj-task-text {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  padding-top: 0.2rem;
+  font-size: 1.2rem;
+}
+
+.dbj-container .dbj-list .dbj-item .dbj-task-text::before {
+  font-size: 1.5rem;
+  padding-right: 1em;
+  width: 2em;
+  display: inline-block;
+  height: 100%;
+}
+
+.dbj-container .dbj-list .dbj-item:hover .dbj-manage {
+  opacity: 1;
+  visibility: visible;
+}
+
+.dbj-container .dbj-list .dbj-item .dbj-manage {
+  position: absolute;
+  right: 1em;
+  top: 0.7em;
+  opacity: 0;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  visibility: hidden;
+}
+
+.dbj-container .dbj-list .dbj-item .dbj-manage .btn {
+  font-size: 1.25em;
+  padding: 0.15em 0.5em;
+}
+
+.dbj-container .dbj-list .dbj-item .dbj-manage .dbj-btn-edit::before {
+  content: '\f040';
+  font-family: "FontAwesome";
+  -webkit-font-smoothing: antialiased;
+}
+
+.dbj-container .dbj-list .dbj-item .dbj-manage .dbj-btn-done::before {
+  content: '\f00c';
+  font-family: "FontAwesome";
+}
+
+.dbj-container .dbj-list .dbj-item .dbj-manage .dbj-btn-delete::before {
+  content: '\f014';
+  font-family: "FontAwesome";
+  -webkit-font-smoothing: antialiased;
+}
+
+.dbj-container .dbj-list .dbj-task .dbj-task-text::before {
+  content: '\2022';
+}
+
+.dbj-container .dbj-list .dbj-event .dbj-task-text::before {
+  content: '\00bb';
+}
+
+.dbj-container .dbj-list .dbj-note .dbj-task-text::before {
+  content: '\2013';
+}
+
+.dbj-container .dbj-list .dbj-msg-empty {
+  border: 1px dotted #b0bec5;
+}
+
+.dbj-container .disabled .dbj-task-text {
+  color: #b0bec5;
+  text-decoration: line-through;
+}
+
+.dbj-container .dbj-add-container .dbj-title-add {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
+.dbj-container .dbj-add-container .dbj-add-message {
+  display: none;
+  opacity: 0;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+.dbj-container .dbj-add-container .dbj-btn-add::before {
+  content: '\f067';
+  font-family: "FontAwesome";
+  padding-right: 0.5em;
+}
+
+.dbj-container .dbj-add-container .dbj-btn-update::before {
+  content: '\f093';
+  font-family: "FontAwesome";
+  padding-right: 0.5em;
+}
+
+.dbj-container .dbj-footer {
+  text-align: center;
+}
+
+.dbj-container .dbj-footer a {
+  color: #455a64;
+  text-decoration: none;
+  font-size: 3rem;
+}
+
+/* Utility Classes */
+.highlight {
+  -webkit-animation: highlight 0.75s ease-in-out;
+          animation: highlight 0.75s ease-in-out;
+}
+
+@-webkit-keyframes highlight {
+  from {
+    background: #f9fbe7;
+    -webkit-transform: scale(1.01);
+            transform: scale(1.01);
+  }
+  to {
+    background: transparent;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes highlight {
+  from {
+    background: #f9fbe7;
+    -webkit-transform: scale(1.01);
+            transform: scale(1.01);
+  }
+  to {
+    background: transparent;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+/*# sourceMappingURL=main.css.map */

@@ -1,3 +1,8 @@
+/*
+Todos:
+() Implement SASS
+*/
+
 body {
   height: 100%;
   font-family: 'Roboto Slab', serif;
@@ -17,11 +22,6 @@ body {
 .dbj-list .disabled .dbj-task-text {
   color: #b0bec5;
   text-decoration: line-through;
-}
-
-.dbj-list .disabled .dbj-manage span {
-  display: inline-block;
-  text-decoration: none;
 }
 
 .dbj-list .dbj-item .dbj-task-text::before {
@@ -172,7 +172,7 @@ body {
 }
 
 .dbj-msg-empty {
-  border: 1px dotted #ccc;
+  border: 1px dotted #cfd8dc;
 }
 
 .dbj-add-message {

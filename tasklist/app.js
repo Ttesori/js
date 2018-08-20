@@ -35,7 +35,7 @@ const dbjDoneHTML =
 const dbjListName = document.querySelector('.dbj-list-label');
 const dbjBtnClear = document.querySelector('.dbj-btn-clear');
 const dbjEmptyHTML =
-  '<div class="alert alert-light dbj-msg-empty">Your list is empty. Add some tasks below and they will appear here.</div>';
+  '<div class="alert alert-light dbj-msg-empty">Your list is empty. Add your bullets below and they will appear here.</div>';
 const dbjAddError = 'Error: Item text cannot be empty.';
 
 // Initialize application
@@ -110,7 +110,7 @@ function addTask() {
     );
     addedTask.classList.add('highlight');
     setTimeout(() => {
-      added.classList.remove('highlight');
+      addedTask.classList.remove('highlight');
     }, 3000);
 
     // Clear input
