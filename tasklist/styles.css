@@ -181,6 +181,16 @@ body {
   transition: all 1s;
 }
 
+.dbj-footer {
+  text-align: center;
+}
+
+.dbj-footer a {
+  color: #455a64;
+  text-decoration: none;
+  font-size: 3rem;
+}
+
 .highlight {
   animation: highlight 0.75s ease-in-out;
 }
