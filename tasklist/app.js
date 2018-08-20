@@ -37,6 +37,27 @@ const dbjBtnClear = document.querySelector('.dbj-btn-clear');
 const dbjEmptyHTML =
   '<div class="alert alert-light dbj-msg-empty">Your list is empty. Add your bullets below and they will appear here.</div>';
 const dbjAddError = 'Error: Item text cannot be empty.';
+const dbjMonths = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];
+const dbjToday = new Date();
+const dbjDate =
+  dbjMonths[dbjToday.getMonth()] +
+  ' ' +
+  dbjToday.getDate() +
+  ', ' +
+  dbjToday.getUTCFullYear();
 
 // Initialize application
 init();
@@ -75,6 +96,7 @@ function init() {
   if (localStorage.getItem('dbj-tasks-title')) {
     dbjListName.textContent = localStorage.getItem('dbj-tasks-title');
   } else {
+    dbjListName.textContent = dbjDate;
     dbjListElement.innerHTML = dbjEmptyHTML;
   }
   // List content
@@ -254,7 +276,7 @@ function deleteTask(e) {
 // Clear list
 function clearList() {
   dbjLists = [];
-  dbjListName.textContent = 'Tasks';
+  dbjListName.textContent = dbjDate;
   dbjListElement.innerHTML = dbjEmptyHTML;
   localStorage.removeItem('dbj-tasks');
   localStorage.removeItem('dbj-tasks-title');

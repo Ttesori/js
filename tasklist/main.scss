@@ -54,28 +54,29 @@ body {
     box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.4);
   }
 
+  /* List Title */
+  .dbj-list-label {
+    transition: all 0.2s ease-in-out;
+    font-family: $font-headings;
+    font-weight: 400;
+    &:hover {
+      background: $highlight;
+    }
+  }
+  /* Clear Button */
+  .dbj-btn-clear {
+    &::before {
+      content: '\f1f8';
+      font-family: $font-icons;
+      padding-right: 0.5em;
+    }
+    &:hover {
+      background: $warning;
+      border-color: $warning;
+    }
+  }
+
   .dbj-list {
-    /* List Title */
-    .dbj-list-label {
-      transition: all 0.2s ease-in-out;
-      font-family: $font-headings;
-      font-weight: 400;
-      &:hover {
-        background: $highlight;
-      }
-    }
-    /* Clear Button */
-    .dbj-btn-clear::before {
-      &::before {
-        content: '\f1f8';
-        font-family: $font-icons;
-        padding-right: 0.5em;
-      }
-      &:hover {
-        background: $warning;
-        border-color: $warning;
-      }
-    }
     /* List Item Styles */
     .dbj-item {
       position: relative;

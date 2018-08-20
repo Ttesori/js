@@ -35,6 +35,8 @@ body {
 
 .dbj-container {
   max-width: 800px;
+  /* List Title */
+  /* Clear Button */
   /* Disabled Item Styles */
   /* Add Item Styles */
   /* Footer */
@@ -46,34 +48,32 @@ body {
           box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.4);
 }
 
-.dbj-container .dbj-list {
-  /* List Title */
-  /* Clear Button */
-  /* List Item Styles */
-  /* List Item Type Icons */
-  /* Message if list is empty */
-}
-
-.dbj-container .dbj-list .dbj-list-label {
+.dbj-container .dbj-list-label {
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
 }
 
-.dbj-container .dbj-list .dbj-list-label:hover {
+.dbj-container .dbj-list-label:hover {
   background: #f9fbe7;
 }
 
-.dbj-container .dbj-list .dbj-btn-clear::before::before {
+.dbj-container .dbj-btn-clear::before {
   content: '\f1f8';
   font-family: "FontAwesome";
   padding-right: 0.5em;
 }
 
-.dbj-container .dbj-list .dbj-btn-clear::before:hover {
+.dbj-container .dbj-btn-clear:hover {
   background: #d32f2f;
   border-color: #d32f2f;
+}
+
+.dbj-container .dbj-list {
+  /* List Item Styles */
+  /* List Item Type Icons */
+  /* Message if list is empty */
 }
 
 .dbj-container .dbj-list .dbj-item {
