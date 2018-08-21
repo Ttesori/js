@@ -1,0 +1,17 @@
+// Colors
+$primary-dark: #512da8;
+$primary: #673ab7;
+$primary-light: #d1c4e9;
+$accent: #cddc39;
+$neutral-dark: #212121;
+$neutral: #757575;
+$neutral-light: #bdbdbd;
+
+.ng-header {
+  .ng-game-settings {
+    &-form {
+      max-width: 550px;
+      margin: 0 auto;
+    }
+  }
+}
