@@ -22,13 +22,13 @@ function startGame() {
     // Inform user of game rules
     setMsg(
       `You are trying to guess a number between ${numMin} and ${numMax} in ${numGuesses} guesses.`,
-      'info',
+      'light',
       'form'
     );
 
     // Replace form
-    const formEl = document.querySelector('.ng-game-settings-form');
-    formEl.innerHTML = '';
+    const formEl = document.querySelector('.ng-game-settings');
+    formEl.style.display = 'none';
 
     // Reset game variables
     gameOver = false;
@@ -52,21 +52,24 @@ function setUpEvents() {
   // Play Game
   console.log('setting up click event on start button');
   const btnPlayEl = document.querySelector('.ng-btn-start');
-  btnPlayEl.addEventListener('mousedown', function(e) {
+  btnPlayEl.addEventListener('click', function(e) {
     e.preventDefault();
     startGame();
   });
 }
 
 function setMsg(msg, type, where) {
-  const gameMsgEl = document.querySelector('.ng-msg');
+  const gameMsgEl = document.querySelector('.ng-msg-game');
   const formMsgEl = document.querySelector('.ng-msg-form');
 
   if (where === 'form') {
-    formMsgEl.textContent = msg;
+    formMsgEl.style.display = 'block';
+    formMsgEl.className = 'ng-msg-form alert';
+    formMsgEl.innerHTML = msg;
     formMsgEl.classList.add('alert-' + type);
   } else if (where === 'game') {
-    gameMsgEl.textContent = msg;
+    gameMsgEl.className = 'ng-msg-game alert';
+    gameMsgEl.innerHTML = msg;
     gameMsgEl.classList.add('alert-' + type);
   }
   console.log(msg);
@@ -84,23 +87,26 @@ function validateInput() {
   numMax = parseInt(maxNumEl.value);
 
   // Validate input
-  if (numGuessesEl.value === '') {
+  if (isNaN(numMin)) {
     validInput = false;
-    setMsg('Please select a number of guesses.', 'error');
-  } else if (minNumEl.value === '' && minNumEl.value < 0) {
+    setMsg('Please enter a minimum number.', 'danger', 'form');
+  } else if (isNaN(numMax) || numMax <= numMin) {
     validInput = false;
-    setMsg('Please enter a positive minimum integer.', 'error');
-  } else if (maxNumEl.value === '' && maxNumEl <= minNumEl) {
+    setMsg(
+      'Please enter a maximum number greater than the minimum.',
+      'danger',
+      'form'
+    );
+  } else if (numGuessesEl.value === '') {
     validInput = false;
-    setMsg('Please enter a maximum integer greater than the minimum.', 'error');
+    setMsg('Please select a number of guesses.', 'danger', 'form');
   }
   return validInput;
 }
 
 function setUpGuessForm() {
   const guessFormEl = document.querySelector('.ng-form-guess');
-  guessFormEl.innerHTML =
-    '<input type="number" class="ng-text-guess"><button type="button" class="ng-btn-guess">Guess!</button>';
+  guessFormEl.innerHTML = `<input type="number" class="ng-text-guess" min="${numMin}" max="${numMax}"><button type="button" class="btn ng-btn-guess">Guess!</button>`;
   document
     .querySelector('.ng-btn-guess')
     .addEventListener('mousedown', function(e) {
@@ -111,11 +117,15 @@ function setUpGuessForm() {
 
 function checkGuess() {
   console.log('Checking guess');
-  const currGuess = parseInt(document.querySelector('.ng-text-guess').value);
 
+  const currGuessEl = document.querySelector('.ng-text-guess');
+  const currGuess = parseInt(currGuessEl.value);
+
+  console.log(guessesUsed);
   if (currGuess === winningNumber) {
-    gameOver = true;
-    console.log('You won!');
+    endGame(true);
+  } else if (numGuesses - guessesUsed === 0) {
+    endGame(false);
   } else {
     let relative;
     currGuess < winningNumber ? (relative = 'higher') : (relative = 'lower');
@@ -125,13 +135,46 @@ function checkGuess() {
       'warning',
       'game'
     );
+    currGuessEl.value = '';
+    guessesUsed++;
   }
-  guessesUsed++;
 }
 
 function setWinningNumber() {
   winningNumber = Math.floor(Math.random() * numMax + numMin);
   console.log(winningNumber);
+}
+
+function endGame(won) {
+  gameOver = true;
+  // hide game message
+  if (won === true) {
+    setMsg(
+      `<h4 class="alert-heading">You won!</h4><p>The winning number was ${winningNumber}. It took you ${guessesUsed} out of ${numGuesses} guesses.</p>`,
+      'success',
+      'form'
+    );
+  } else {
+    setMsg(
+      `<h4 class="alert-heading">You lost!</h4><p>The winning number was ${winningNumber}.</p>`,
+      'danger',
+      'form'
+    );
+  }
+  console.log('Game over, resetting...');
+  const msgGameEl = document.querySelector('.ng-msg-game');
+  msgGameEl.innerHTML =
+    '<button type="button" class="btn btn-secondary ng-btn-replay">Play again?</button>';
+  msgGameEl.className = 'alert ng-msg-game ng-msg-empty';
+  document
+    .querySelector('.ng-btn-replay')
+    .addEventListener('click', restartGame);
+  // hide game form
+  document.querySelector('.ng-form-guess').innerHTML = '';
+}
+
+function restartGame() {
+  location.reload();
 }
 
 init();

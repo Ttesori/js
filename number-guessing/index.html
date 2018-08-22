@@ -7,22 +7,37 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
     crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:300,400" rel="stylesheet">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+    crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
   <title>Number Guesser</title>
 </head>
 
 <body>
   <header class="jumbotron ng-header text-center">
-    <h1 class="">Number Guessing Game</h1>
+    <h1 class="ng-title">Number Guessing Game</h1>
+    <div class="ng-msg-form alert"></div>
     <div class="ng-game-settings">
       <p class="lead">Game Settings</p>
-      <div class="ng-msg-form alert"></div>
       <form class="ng-game-settings-form form-row">
         <div class="col">
-          <input type="number" class="form-control ng-setting-min" placeholder="Minimum #">
+          <select class="form-control ng-setting-min">
+            <option value="">Minimum #</option>
+            <option value="1">1</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+          </select>
         </div>
         <div class="col">
-          <input type="number" class="form-control ng-setting-max" placeholder="Maximum #">
+          <select class="form-control ng-setting-max">
+            <option value="">Maximum #</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
         </div>
         <div class="col">
           <select class="form-control ng-setting-guesses">
@@ -34,7 +49,7 @@
           </select>
         </div>
         <div class="col">
-          <button type="button" class="btn btn-secondary ng-btn-start">Start Game</button>
+          <button type="button" class="btn btn-secondary ng-btn-start">Start Game <i class="fa fa-chevron-circle-right" aria-hidden="true"></i></button>
         </div>
 
 
@@ -42,10 +57,11 @@
     </div>
   </header>
   <div class="container ng-container text-center">
-    <div class="alert ng-msg ng-msg-empty">Choose options above to start a new game.</div>
+
     <form class="ng-form-guess">
 
     </form>
+    <div class="alert ng-msg-game ng-msg-empty">Choose options above to start a new game.</div>
   </div>
 
   <script src="app.js"></script>
