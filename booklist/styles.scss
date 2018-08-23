@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+header,
+form {
+  margin-bottom: 5rem;
+}
+
+.bl-header {
+  background: #eee;
+  padding: 4rem 0 1rem;
+}
