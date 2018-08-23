@@ -127,16 +127,24 @@ function checkGuess() {
   } else if (numGuesses - guessesUsed === 0) {
     endGame(false);
   } else {
-    let relative;
-    currGuess < winningNumber ? (relative = 'higher') : (relative = 'lower');
-    setMsg(
-      `The number is ${relative} than ${currGuess}. You have ${numGuesses -
-        guessesUsed} guesses left.`,
-      'warning',
-      'game'
-    );
-    currGuessEl.value = '';
-    guessesUsed++;
+    if (isNaN(currGuess) || currGuess < numMin || currGuess > numMax) {
+      setMsg(
+        `Please enter a number between ${numMin} and ${numMax} above.`,
+        'warning',
+        'game'
+      );
+    } else {
+      let relative;
+      currGuess < winningNumber ? (relative = 'higher') : (relative = 'lower');
+      setMsg(
+        `The number is ${relative} than ${currGuess}. You have ${numGuesses -
+          guessesUsed} guesses left.`,
+        'warning',
+        'game'
+      );
+      currGuessEl.value = '';
+      guessesUsed++;
+    }
   }
 }
 
@@ -150,7 +158,7 @@ function endGame(won) {
   // hide game message
   if (won === true) {
     setMsg(
-      `<h4 class="alert-heading">You won!</h4><p>The winning number was ${winningNumber}. It took you ${guessesUsed} out of ${numGuesses} guesses.</p>`,
+      `<h4 class="alert-heading">You won!</h4><p>The winning number was ${winningNumber}.<br>It took you ${guessesUsed} out of ${numGuesses} guesses.</p>`,
       'success',
       'form'
     );
@@ -164,7 +172,7 @@ function endGame(won) {
   console.log('Game over, resetting...');
   const msgGameEl = document.querySelector('.ng-msg-game');
   msgGameEl.innerHTML =
-    '<button type="button" class="btn btn-secondary ng-btn-replay">Play again?</button>';
+    '<button type="button" class="btn btn-secondary ng-btn-replay">Play<br>again?</button>';
   msgGameEl.className = 'alert ng-msg-game ng-msg-empty';
   document
     .querySelector('.ng-btn-replay')

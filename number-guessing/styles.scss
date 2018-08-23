@@ -31,6 +31,7 @@ body {
   text-shadow: 0px 0px 1rem #f4ff81;
   &:hover {
     background: $accent-light;
+    color: $accent-dark;
   }
 }
 .ng-header {
@@ -53,9 +54,13 @@ body {
     border: 0;
     box-shadow: 0px 0px 1rem $primary-dark;
     max-width: 600px;
+    p {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
 
     &.alert-danger {
-      background: rgba($error, 0.8);
+      background: rgba($error, 0.7);
     }
     &.alert-success {
       background: rgba($success, 0.7);
@@ -82,6 +87,9 @@ body {
       background: $accent;
       color: $accent-dark;
       font-size: 1.15rem;
+      &:hover {
+        background: $accent-light;
+      }
     }
     .lead {
       font-family: $font-headings;
@@ -93,13 +101,14 @@ body {
 .ng-container {
   border: 3px dashed darken($neutral, 15%);
   padding: 1em;
+  margin: 1em auto;
   max-width: 500px;
   border-radius: 0.5rem;
   .ng-form-guess {
     .ng-text-guess {
       font-size: 4rem;
       height: 6rem;
-      width: 6rem;
+      width: 9rem;
       border-radius: 0.5rem;
       margin-top: 2rem;
       border: 0;
@@ -125,7 +134,7 @@ body {
         opacity: 0.7;
         font-size: 5.5rem;
         line-height: 6rem;
-        color: $accent-light;
+        color: darken($accent, 5%);
 
         z-index: -1;
       }
@@ -150,6 +159,27 @@ body {
     }
     &.ng-msg-empty {
       color: $neutral;
+    }
+    .ng-btn-replay {
+      width: 9rem;
+      height: 9rem;
+      border-radius: 50%;
+      position: relative;
+      font-size: 1.75rem;
+      line-height: 1.2;
+      z-index: 10;
+      text-align: center;
+      &::before {
+        content: '\f01e';
+        font-family: $font-icons;
+        position: absolute;
+        left: 10%;
+        top: 18%;
+        font-size: 7.75rem;
+        line-height: 6rem;
+        color: darken($accent, 5%);
+        z-index: -1;
+      }
     }
   }
 }

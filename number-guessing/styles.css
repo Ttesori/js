@@ -19,6 +19,7 @@ body {
 
 .btn:hover {
   background: #eeff41;
+  color: #33691e;
 }
 
 .ng-header {
@@ -48,8 +49,13 @@ body {
   max-width: 600px;
 }
 
+.ng-header .ng-msg-form p {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
 .ng-header .ng-msg-form.alert-danger {
-  background: rgba(233, 30, 99, 0.8);
+  background: rgba(233, 30, 99, 0.7);
 }
 
 .ng-header .ng-msg-form.alert-success {
@@ -79,6 +85,10 @@ body {
   font-size: 1.15rem;
 }
 
+.ng-header .ng-game-settings .ng-btn-start:hover {
+  background: #eeff41;
+}
+
 .ng-header .ng-game-settings .lead {
   font-family: "Roboto Slab";
   text-shadow: 0px 0px 1rem #1a237e;
@@ -87,6 +97,7 @@ body {
 .ng-container {
   border: 3px dashed #4f4f4f;
   padding: 1em;
+  margin: 1em auto;
   max-width: 500px;
   border-radius: 0.5rem;
 }
@@ -94,7 +105,7 @@ body {
 .ng-container .ng-form-guess .ng-text-guess {
   font-size: 4rem;
   height: 6rem;
-  width: 6rem;
+  width: 9rem;
   border-radius: 0.5rem;
   margin-top: 2rem;
   border: 0;
@@ -122,7 +133,7 @@ body {
   opacity: 0.7;
   font-size: 5.5rem;
   line-height: 6rem;
-  color: #eeff41;
+  color: #c6d626;
   z-index: -1;
 }
 
@@ -150,5 +161,28 @@ body {
 
 .ng-container .ng-msg-game.ng-msg-empty {
   color: #757575;
+}
+
+.ng-container .ng-msg-game .ng-btn-replay {
+  width: 9rem;
+  height: 9rem;
+  border-radius: 50%;
+  position: relative;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  z-index: 10;
+  text-align: center;
+}
+
+.ng-container .ng-msg-game .ng-btn-replay::before {
+  content: '\f01e';
+  font-family: "FontAwesome";
+  position: absolute;
+  left: 10%;
+  top: 18%;
+  font-size: 7.75rem;
+  line-height: 6rem;
+  color: #c6d626;
+  z-index: -1;
 }
 /*# sourceMappingURL=styles.css.map */
