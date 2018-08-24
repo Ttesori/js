@@ -17,7 +17,54 @@ form {
 }
 
 .bl-header {
-  background: #eee;
+  background: #37474f;
   padding: 4rem 0 1rem;
+  color: #fff;
+  -webkit-box-shadow: 0px 0px 2rem #607d8b;
+          box-shadow: 0px 0px 2rem #607d8b;
+  border-bottom: 3px solid #03a9f4;
+  text-shadow: 0px 0px 2rem black;
+}
+
+.bl-header .fa-book {
+  color: #03a9f4;
+}
+
+.bl-container .bl-alert {
+  margin: 1rem 0;
+  padding: 1rem 2rem;
+  display: none;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.bl-container .bl-alert.alert-error {
+  background: #e91e63;
+}
+
+.bl-container .bl-alert.alert-success {
+  background: #8bc34a;
+}
+
+.bl-container .bl-add input,
+.bl-container .bl-add select {
+  font-size: 1.5rem;
+}
+
+.bl-container .bl-add input::-webkit-input-placeholder {
+  color: #bbb;
+}
+
+.bl-container .bl-add input:-ms-input-placeholder {
+  color: #bbb;
+}
+
+.bl-container .bl-add input::-ms-input-placeholder {
+  color: #bbb;
+}
+
+.bl-container .bl-add input::placeholder {
+  color: #bbb;
 }
 /*# sourceMappingURL=styles.css.map */

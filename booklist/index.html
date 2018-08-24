@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="styles.css">
 
   <title>Book List</title>
@@ -14,21 +15,22 @@
 <body>
   <header class="bl-header">
     <div class="container text-center">
-      <h1>Currently Reading</h1>
+      <h1><i class="fa fa-book" aria-hidden="true"></i> Currently Reading</h1>
       <p>Easily keep track of what you're reading and what you think about each book.</p>
     </div>
   </header>
   <div class="bl-container container">
+    <div class="bl-alert"></div>
     <form class="bl-add">
       <div class="row">
         <div class="one-half column">
           <label for="bl-title">Book Title</label>
-          <input type="text" id="bl-title" class="u-full-width" placeholder="Lord of the Rings">
+          <input type="text" id="bl-title" class="u-full-width" placeholder="(e.g., Lord of the Rings)">
 
         </div>
         <div class="one-half column">
           <label for="bl-author">Book Author</label>
-          <input type="text" id="bl-author" class="u-full-width" placeholder="JRR Tolkien">
+          <input type="text" id="bl-author" class="u-full-width" placeholder="(e.g., JRR Tolkien)">
 
         </div>
       </div>
@@ -51,6 +53,7 @@
           <select class="u-full-width" id="bl-percent">
             <option value="" selected>Choose a Percentage:</option>
             <option value="0">0%</option>
+            <option value="5">5%</option>
             <option value="25">25%</option>
             <option value="50">50%</option>
             <option value="75">75%</option>
@@ -84,6 +87,6 @@
   </div>
 
 </body>
-<script src="app.js"></script>
+<script src="appes6.js"></script>
 
 </html>
