@@ -1,3 +1,11 @@
+/*
+TODOS:
+() Check error handling
+() Comment code
+() Clear log statements
+() Build out footer
+*/
+
 const findlocation = new FindLocation();
 const ui = new UI();
 const weather = new Weather();
