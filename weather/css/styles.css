@@ -23,6 +23,7 @@ main.container {
 
 .we-container-results {
   display: none;
+  max-width: 960px;
 }
 
 .we-container-results .we-details {

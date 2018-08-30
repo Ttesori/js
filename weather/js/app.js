@@ -29,12 +29,7 @@ function getWeatherInfo(locationInfo) {
         .querySelector('.we-btn-saveLocation')
         .addEventListener('click', () => {
           saveLocation();
-          const saveBtnEl = document.querySelector('.we-btn-saveLocation');
-          saveBtnEl.innerHTML =
-            'Location Saved! <i class="fa fa-check" aria-hidden="true"></i>';
-          setTimeout(() => {
-            document.querySelector('.we-btn-saveLocation').remove();
-          }, 3000);
+          ui.saveLocation();
         });
       // Add event handler for load more
       document.querySelector('.we-btn-load').addEventListener('click', () => {
@@ -63,6 +58,11 @@ function saveLocation() {
   const location = document.querySelector('.we-results-location').textContent;
   localStorage.setItem('we-location', location);
   console.log('location saved');
+}
+
+function clearLocation() {
+  localStorage.clear('we-location');
+  ui.clearLocation();
 }
 
 function loadLocation() {

@@ -27,6 +27,7 @@ main.container {
 
 .we-container-results {
   display: none;
+  max-width: 960px;
   .we-details {
     list-style: none;
     .we-forecast-period {

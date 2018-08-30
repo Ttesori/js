@@ -16,7 +16,7 @@ class UI {
     weatherEl.innerHTML = `
     <h3 class="bg-primary text-light card-header">
     <span class="we-results-location">${weatherLocation}</span>
-    <button type="button" class="we-btn-saveLocation btn btn-outline-light btn-sm float-right">Save Location <i class="fa fa-bookmark" aria-hidden="true"></i></button>
+    <button type="button" class="we-btn-saveLocation btn btn-outline-light btn-sm float-right">Save Location <i class="fa fa-bookmark-o" aria-hidden="true"></i></button>
     </h3>`;
 
     const weatherDeets = document.createElement('div');
@@ -95,6 +95,23 @@ class UI {
       formSubmitEl.innerHTML =
         '<i class="fa fa-refresh fa-spin" aria-hidden="true"></i> Loading...';
     }
+  }
+
+  saveLocation() {
+    const saveBtnEl = document.querySelector('.we-btn-saveLocation');
+    saveBtnEl.innerHTML =
+      'Location Saved! <i class="fa fa-check" aria-hidden="true"></i>';
+    setTimeout(() => {
+      saveBtnEl.innerHTML =
+        'Clear Saved Location <i class="fa fa-bookmark" aria-hidden="true"></i>';
+      saveBtnEl.classList.add('we-btn-clear');
+    }, 3000);
+  }
+
+  clearLocation() {
+    const saveBtnEl = document.querySelector('.we-btn-saveLocation');
+    saveBtnEl.innerHTML =
+      'Save Location <i class="fa fa-bookmark-o" aria-hidden="true"></i>';
   }
 
   static getNiceDate(date) {
