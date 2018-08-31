@@ -1,6 +1,6 @@
 /*
 Title: Get Your Weather Application
-Author: Toni Tesori
+Author: Ttesori
 Dependencies: FindLocation, Weather, UI
 
 TODOS:
