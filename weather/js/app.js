@@ -12,15 +12,6 @@ const findlocation = new FindLocation();
 const ui = new UI();
 const weather = new Weather();
 
-// Event Handler for Loading Weather
-document.querySelector('.we-form-search').addEventListener('submit', e => {
-  e.preventDefault();
-  const locationValue = ui.getLocation();
-  if (locationValue !== -1) {
-    beginLoadingWeather(locationValue);
-  }
-});
-
 /* 
 Use location from form to begin loading weather data
 */
@@ -38,6 +29,7 @@ function beginLoadingWeather(locationValue) {
           name: resp.results[0].address.freeformAddress,
           location: resp.results[0].position
         };
+
         finishLoadingWeather(locationInfo).then(() => {
           resolve();
         });
@@ -130,6 +122,16 @@ function init() {
       ui.saveLocation();
     });
   }
+
+  // Event Handler for Loading Weather
+  document.querySelector('.we-form-search').addEventListener('submit', e => {
+    e.preventDefault();
+    const locationValue = ui.getLocation();
+
+    if (locationValue !== -1) {
+      beginLoadingWeather(locationValue);
+    }
+  });
 }
 
 init();

@@ -23,6 +23,7 @@ class UI {
   outputWeatherInfo(location, weather) {
     // Get results container
     const weatherEl = document.querySelector('.we-container-results');
+    weatherEl.innerHTML = '';
 
     // Add header to main container
     this.outputWeatherInfoHeader(location, weatherEl);
