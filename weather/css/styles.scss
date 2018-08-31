@@ -1,12 +1,29 @@
 // Colors
 
-$warning: #dc3545;
-$primary: #007bff;
+$warning: #e53935;
+$primary: #03a9f4;
 
 html,
 body {
   height: 100%;
   position: relative;
+}
+
+.bg-primary {
+  background: $primary !important;
+}
+.text-primary {
+  color: $primary !important;
+}
+.btn-primary {
+  background: $primary;
+  border-color: $primary;
+  &:hover {
+  }
+}
+.btn-outline-primary {
+  border-color: $primary;
+  color: $primary;
 }
 
 #wrapper {
