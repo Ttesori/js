@@ -10,7 +10,6 @@ class Weather {
   */
   getWeatherFromNWS(lat, long) {
     const nwsurl = `https://api.weather.gov/points/${lat},${long}/forecast/`;
-
     return fetch(nwsurl).then(resp => resp.json());
   }
 

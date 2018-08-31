@@ -28,60 +28,66 @@ document.querySelector('.we-form-search').addEventListener('submit', e => {
 Use location from form to begin loading weather data
 */
 function beginLoadingWeather(locationValue) {
-  // Add loading states to elements
-  ui.toggleLoading();
+  return new Promise(resolve => {
+    // Add loading states to elements
+    ui.toggleLoading();
 
-  // Attempt to get coordinates from location field value
-  findlocation
-    .getLocationFromAddress(locationValue)
-    .then(resp => {
-      // If location retrieved successfully, pass info to next step
-      const locationInfo = {
-        name: resp.results[0].address.freeformAddress,
-        location: resp.results[0].position
-      };
-      finishLoadingWeather(locationInfo);
-    })
-    .catch(() => {
-      // If location not found, show error
-      ui.showAlert(
-        'Error: Location Not Found. Try entering a new location.',
-        'danger'
-      );
-    });
+    // Attempt to get coordinates from location field value
+    findlocation
+      .getLocationFromAddress(locationValue)
+      .then(resp => {
+        // If location retrieved successfully, pass info to next step
+        const locationInfo = {
+          name: resp.results[0].address.freeformAddress,
+          location: resp.results[0].position
+        };
+        finishLoadingWeather(locationInfo).then(() => {
+          resolve();
+        });
+      })
+      .catch(() => {
+        // If location not found, show error
+        ui.showAlert(
+          'Error: Location Not Found. Try entering a new location.',
+          'danger'
+        );
+      });
+  });
 }
 
 /* 
 Once location is determined, fetch weather data from NWS and output data
 */
 function finishLoadingWeather(locationInfo) {
-  // Attempt to retrieve weather from NWS
-  weather
-    .getWeatherFromNWS(locationInfo.location.lat, locationInfo.location.lon)
-    .then(resp => {
-      // If data is returned successfully, output to page
-      ui.outputWeatherInfo(locationInfo, resp.properties.periods);
+  return new Promise(resolve => {
+    // Attempt to retrieve weather from NWS
+    weather
+      .getWeatherFromNWS(locationInfo.location.lat, locationInfo.location.lon)
+      .then(resp => {
+        // If data is returned successfully, output to page
+        ui.outputWeatherInfo(locationInfo, resp.properties.periods);
 
-      // Add Event handler for Save Location button
-      document
-        .querySelector('.we-btn-saveLocation')
-        .addEventListener('click', () => {
+        // Add Event handler for Save Location button
+        document.querySelector('.we-btn-save').addEventListener('click', () => {
           saveLocation();
           ui.saveLocation();
         });
 
-      // Add event handler for load more
-      document.querySelector('.we-btn-load').addEventListener('click', () => {
-        ui.loadMore();
-      });
+        // Add event handler for load more
+        document.querySelector('.we-btn-load').addEventListener('click', () => {
+          ui.loadMore();
+        });
 
-      // Toggle loading back to ready state
-      ui.toggleLoading();
-    })
-    .catch(() => {
-      // If error loading data, show error
-      ui.showAlert('Error: Cannot fetch data. Try again later.', 'danger');
-    });
+        // Toggle loading back to ready state
+        ui.toggleLoading();
+        resolve();
+      })
+      .catch(err => {
+        // If error loading data, show error
+        ui.showAlert('Error: Cannot fetch data. Try again later.', 'danger');
+        ui.toggleLoading();
+      });
+  });
 }
 
 /* 
@@ -94,9 +100,11 @@ function saveLocation() {
   ui.saveLocation();
 
   // Add clear button event listener
-  document.querySelector('.we-btn-clear').addEventListener('click', () => {
-    clearLocation();
-  });
+  document
+    .querySelector('.we-btn-saveLocation')
+    .addEventListener('click', () => {
+      clearLocation();
+    });
 }
 
 /* 
@@ -105,6 +113,13 @@ Clear saved location from local storage
 function clearLocation() {
   localStorage.clear('we-location');
   ui.clearLocation();
+
+  // Add save button event listener
+  document
+    .querySelector('.we-btn-saveLocation')
+    .addEventListener('click', () => {
+      saveLocation();
+    });
 }
 
 /* 
@@ -114,7 +129,9 @@ function init() {
   // If location saved in local storage, load weather
   const location = localStorage.getItem('we-location');
   if (location !== null) {
-    beginLoadingWeather(location);
+    beginLoadingWeather(location).then(() => {
+      ui.saveLocation();
+    });
   }
 }
 

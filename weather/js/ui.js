@@ -53,7 +53,7 @@ class UI {
     // Output location name
     locationHeaderEl.innerHTML = `<span class="we-results-location">${weatherLocation}</span>`;
     // Output save button
-    locationHeaderEl.innerHTML += `<button type="button" class="we-btn-saveLocation btn btn-outline-light btn-sm float-right">Save Location <i class="fa fa-bookmark-o" aria-hidden="true"></i></button>`;
+    locationHeaderEl.innerHTML += `<button type="button" class="we-btn-saveLocation btn btn-outline-light btn-sm float-right we-btn-save">Save Location <i class="fa fa-bookmark-o" aria-hidden="true"></i></button>`;
     weatherEl.appendChild(locationHeaderEl);
   }
   /* 
@@ -154,22 +154,24 @@ class UI {
     const saveBtnEl = document.querySelector('.we-btn-saveLocation');
     saveBtnEl.innerHTML =
       'Location Saved! <i class="fa fa-check" aria-hidden="true"></i>';
+    saveBtnEl.classList.remove('we-btn-save');
     saveBtnEl.classList.add('we-btn-clear');
     setTimeout(() => {
       saveBtnEl.innerHTML =
-        'Clear Saved Location <i class="fa fa-bookmark" aria-hidden="true"></i>';
+        'Clear Location <i class="fa fa-bookmark" aria-hidden="true"></i>';
     }, 3000);
   }
   /* 
   Method to manage elements for clearing saved location
   */
   clearLocation() {
-    const clearBtnEl = document.querySelector('.we-btn-clear');
+    const clearBtnEl = document.querySelector('.we-btn-saveLocation');
     clearBtnEl.innerHTML =
       'Location Cleared! <i class="fa fa-check" aria-hidden="true"></i>';
     setTimeout(() => {
       clearBtnEl.innerHTML =
         'Save Location <i class="fa fa-bookmark-o" aria-hidden="true"></i>';
+      clearBtnEl.classList.add('we-btn-save');
       clearBtnEl.classList.remove('we-btn-clear');
     }, 3000);
   }
