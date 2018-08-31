@@ -7,17 +7,28 @@ html,
 body {
   height: 100%;
   position: relative;
+  color: #37474f;
 }
 
 .bg-primary {
   background: $primary !important;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.2),
+    $primary
+  ) !important;
 }
 .text-primary {
   color: $primary !important;
 }
 .btn-primary {
-  background: $primary;
   border-color: $primary;
+  background: $primary;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.2),
+    $primary
+  );
   &:hover {
   }
 }
@@ -38,6 +49,10 @@ main.container {
 
 .navbar {
   .navbar-brand {
+    background: url('../img/icon-weather.svg') no-repeat;
+    background-size: contain;
+    padding-left: 3.5rem;
+
     .fa {
       margin-right: 0.4rem;
       font-size: 1.75rem;
@@ -54,21 +69,34 @@ main.container {
 .we-container-results {
   display: none;
   max-width: 960px;
+  .we-btn-saveLocation {
+    .fa {
+      padding-left: 0.25rem;
+    }
+  }
+  h3 {
+    letter-spacing: 1px;
+  }
+
   .we-details {
     list-style: none;
+
     .we-forecast-period {
       padding-bottom: 1rem;
       padding-top: 1rem;
     }
-    span {
-    }
+
     .we-forecast-date {
       border-bottom: 1px solid #ddd;
       padding-bottom: 0.5rem;
       margin-bottom: 1rem;
+      color: #455a64;
+
       &-specific {
         float: right;
         color: #ccc;
+        font-weight: 300;
+        letter-spacing: 1px;
       }
     }
     .we-forecast-temp {
@@ -76,13 +104,13 @@ main.container {
       height: 100%;
       font-size: 3.5em;
       color: $warning;
-      margin-right: 1rem;
+      margin-right: 1.5rem;
     }
     .we-forecast-temp-morning {
       color: $primary;
     }
     .we-forecast-icon {
-      margin-left: 1rem;
+      margin-left: 1.25rem;
       img {
         padding: 4px;
         border-radius: 0.5rem;
