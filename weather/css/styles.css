@@ -33,6 +33,11 @@ main.container {
   padding-bottom: 140px;
 }
 
+.navbar .navbar-brand .fa {
+  margin-right: 0.4rem;
+  font-size: 1.75rem;
+}
+
 .we-card-form {
   max-width: 650px;
   margin: 0 auto;
