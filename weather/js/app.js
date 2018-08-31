@@ -4,10 +4,7 @@ Author: Toni Tesori
 Dependencies: FindLocation, Weather, UI
 
 TODOS:
-() Check error handling
-() Comment code
-() Clear log statements
-() Build out footer
+() Refine styling...aka give it some non-default styling lol
 */
 
 // Import dependencies

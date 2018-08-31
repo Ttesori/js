@@ -74,6 +74,10 @@ main.container {
     }
     .we-forecast-icon {
       margin-left: 1rem;
+      img {
+        padding: 4px;
+        border-radius: 0.5rem;
+      }
     }
   }
   .we-btn-load {

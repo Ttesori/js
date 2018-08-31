@@ -90,7 +90,7 @@ class UI {
         <span class="we-forecast-icon"><a href="https://forecast.weather.gov/MapClick.php?lon=${
           location.location.lon
         }&lat=${location.location.lat}">
-        <img src="${period.icon}">
+        <img src="${period.icon}" class="shadow-sm">
         </a></span>
         </div>
         `;

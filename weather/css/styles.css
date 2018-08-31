@@ -80,6 +80,11 @@ main.container {
   margin-left: 1rem;
 }
 
+.we-container-results .we-details .we-forecast-icon img {
+  padding: 4px;
+  border-radius: 0.5rem;
+}
+
 .we-container-results .we-btn-load {
   margin: 1rem auto;
   display: inline-block;
