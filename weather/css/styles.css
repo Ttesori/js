@@ -91,4 +91,14 @@ footer {
   width: 100%;
   height: 85px;
 }
+
+footer .fa-github {
+  font-size: 2.5rem;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+footer .fa-github:hover {
+  color: white;
+}
 /*# sourceMappingURL=styles.css.map */
