@@ -10,15 +10,16 @@ function showGame() {
 
 function init() {
   const wordCount = 2;
-  getWordFromServer(wordCount, (err, puzzle) => {
-    if (err) {
-      console.log(err);
-    } else {
+  getWordFromServer(wordCount).then(
+    puzzle => {
       hangman = new Hangman(puzzle, puzzle.length);
       showGame();
       hangman.calculateStatus();
+    },
+    err => {
+      console.log(err);
     }
-  });
+  );
 
   document.addEventListener('keypress', e => {
     if (hangman.status === 'playing') {
