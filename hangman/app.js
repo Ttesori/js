@@ -1,22 +1,31 @@
-const hangman1 = new Hangman('Cat', 2);
+let hangman;
 
 function showGame() {
   const gameEl = document.querySelector('.hang-game-puzzle');
-  gameEl.textContent = hangman1.getPuzzle();
+  gameEl.textContent = hangman.puzzle;
 
   const guessEl = document.querySelector('.hang-game-guesses');
-  guessEl.textContent = hangman1.getStatusMsg();
+  guessEl.textContent = hangman.statusMsg;
 }
-
-document.addEventListener('keypress', e => {
-  if (hangman1.status === 'playing') {
-    hangman1.guessLetter(e.key);
-    showGame();
-  }
-});
 
 function init() {
-  showGame();
-  hangman1.calculateStatus();
+  const wordCount = 2;
+  getWordFromServer(wordCount, (err, puzzle) => {
+    if (err) {
+      console.log(err);
+    } else {
+      hangman = new Hangman(puzzle, puzzle.length);
+      showGame();
+      hangman.calculateStatus();
+    }
+  });
+
+  document.addEventListener('keypress', e => {
+    if (hangman.status === 'playing') {
+      hangman.guessLetter(e.key);
+      showGame();
+    }
+  });
 }
+
 init();
