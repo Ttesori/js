@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet">
   <link rel="stylesheet" href="css/main.css">
   <title>Hangman</title>
@@ -15,8 +17,16 @@
     <h1>Play Hangman!</h1>
     <div class="hang-game-puzzle"></div>
     <div class="hang-game-guesses"></div>
-    <button class="hang-game-btn hang-game-btn--reset">Reset</button>
+    <button class="hang-game-btn hang-game-btn--reset"><i class="fa fa-repeat" aria-hidden="true"></i> Reset Game</button>
   </div>
+  <div class="hang-game-tip">
+    <strong>How To Play:</strong> Press a character on your keyboard to guess a letter. <br>To win, complete the puzzle
+    before
+    you run out of guesses!
+  </div>
+  <footer>
+    <a href="https://github.com/Ttesori" title="Built by Ttesori"><i class="fa fa-github" aria-hidden="true"></i></a>
+  </footer>
   <script src="js/request.js"></script>
   <script src="js/hangman.js"></script>
   <script src="app.js"></script>

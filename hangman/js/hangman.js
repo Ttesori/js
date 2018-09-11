@@ -3,6 +3,7 @@ class Hangman {
     this.word = word.toLowerCase().split('');
     this.guessesLeft = guessesLeft;
     this.guessedLetters = [];
+    this.incorrectLetters = [];
     this.status = 'playing';
   }
   get puzzle() {
@@ -34,6 +35,7 @@ class Hangman {
         this.guessesLeft--;
       }
     }
+    this.updateIncorrectLetters();
     this.calculateStatus();
   }
 
@@ -59,9 +61,18 @@ class Hangman {
     if (this.status === 'playing') {
       return `Guesses left: ${this.guessesLeft}`;
     } else if (this.status === 'failed') {
-      return `Nice try! The word was "${this.word.join('')}"`;
+      return `Nice try! The puzzle was "${this.word.join('')}"`;
     } else {
-      return `Great work! You guessed the word.`;
+      return `Great work! You guessed the puzzle.`;
+    }
+  }
+
+  updateIncorrectLetters() {
+    if (this.guessedLetters.length > 0) {
+      const letters = this.guessedLetters.filter(
+        letter => this.word.indexOf(letter) === -1
+      );
+      this.incorrectLetters = letters.slice();
     }
   }
 }

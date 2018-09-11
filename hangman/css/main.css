@@ -15,13 +15,15 @@ body {
   color: #ffffff;
   font-size: 16px;
   font-family: Lato, sans-serif;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
 .hang-game {
   padding: 0.5rem 2rem 1rem;
-  margin: 3rem auto;
+  margin: 3.5rem auto 1rem;
   border: 1px solid #607d8b;
-  max-width: 500px;
+  max-width: 550px;
   text-align: center;
   border-radius: 0.25rem;
   background: #455a64;
@@ -39,18 +41,39 @@ body {
   font-size: 2rem;
   line-height: 2rem;
   border: 1px solid #607d8b;
-  max-width: 75%;
+  max-width: 90%;
   margin: 0.5rem auto;
   padding: 0.5rem 0.5rem 1rem;
   border-radius: 0.25rem;
   letter-spacing: 2px;
+  background: rgba(96, 125, 139, 0.5);
   -webkit-box-shadow: 0px 0px 1rem rgba(38, 50, 56, 0.5);
           box-shadow: 0px 0px 1rem rgba(38, 50, 56, 0.5);
+}
+
+.hang-game-puzzle-letter {
+  display: inline-block;
+}
+
+.hang-game-puzzle-letter.empty::before {
+  content: '\2217';
+  color: white;
+}
+
+.hang-game-puzzle-letter.space {
+  width: 1rem;
 }
 
 .hang-game-guesses {
   font-weight: 300;
   margin: 1rem 0 0;
+}
+
+.hang-game-guesses--incorrect {
+  font-style: italic;
+  color: #cfd8dc;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
 }
 
 .hang-game-btn {
@@ -63,5 +86,69 @@ body {
   -webkit-box-shadow: 0px 0px 1rem rgba(38, 50, 56, 0.5);
           box-shadow: 0px 0px 1rem rgba(38, 50, 56, 0.5);
   font-size: 1rem;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.hang-game-btn:hover {
+  background: #eeff41;
+}
+
+.hang-game-btn .fa {
+  color: #89951a;
+  padding-right: 0.25rem;
+  font-size: 1.15rem;
+}
+
+.hang-game.game-won .hang-game-puzzle {
+  -webkit-box-shadow: 0px 0px 2rem #cddc39;
+          box-shadow: 0px 0px 2rem #cddc39;
+}
+
+.hang-game.game-won .hang-game-guesses {
+  font-weight: bold;
+  color: #cddc39;
+}
+
+.hang-game.game-lost .hang-game-puzzle {
+  -webkit-box-shadow: 0px 0px 2rem #e91e63;
+          box-shadow: 0px 0px 2rem #e91e63;
+}
+
+.hang-game.game-lost .hang-game-guesses {
+  font-weight: bold;
+  color: #e91e63;
+}
+
+.hang-game-tip {
+  text-align: center;
+  color: #607d8b;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  font-style: italic;
+  line-height: 150%;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.hang-game-tip:hover {
+  color: #cfd8dc;
+  cursor: default;
+}
+
+footer {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+footer a {
+  color: rgba(96, 125, 139, 0.5);
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+footer a:hover {
+  color: #cddc39;
 }
 /*# sourceMappingURL=main.css.map */
