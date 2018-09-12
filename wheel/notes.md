@@ -20,6 +20,19 @@ instance variables
 - updatePuzzle
 - updateStatus
 
+playGame
+Turn - one wheel spin:
+
+- Spin Wheel THEN either
+- Guess letter THEN Solve or Spin
+- Buy Vowel if bank > 250 THEN Solve or Spin
+
+1. Spin wheel
+
+- Guess Letter
+- Buy Vowel if bank > 250
+- Solve Puzzle
+
 ##Build PlayWheelUI class
 
 - init
