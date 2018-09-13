@@ -2,28 +2,26 @@ class WheelValues {
   static getValues() {
     const values = [
       0,
+      700,
       2500,
       500,
       600,
-      700,
-      600,
-      650,
-      500,
-      700,
+      250,
       0,
-      100000,
-      0,
-      600,
+      900,
+      700,
+      5000,
+      250,
       550,
       500,
-      600,
       0,
+      600,
       650,
       1000,
       700,
       500,
       800,
-      500,
+      0,
       650,
       500,
       900
@@ -34,7 +32,10 @@ class WheelValues {
   static getRandomValue() {
     const values = WheelValues.getValues();
     const rand = Math.floor(Math.random() * values.length);
-    return values[rand];
+    return {
+      value: values[rand],
+      position: rand
+    };
   }
 }
 

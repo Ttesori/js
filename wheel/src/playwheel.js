@@ -1,11 +1,13 @@
 class PlayWheel {
-  constructor(puzzle) {
-    console.log(puzzle);
-    this._puzzle = puzzle.puzzle.toUpperCase().split('');
-    this._category = puzzle.category;
-    this._guessedLetters = [];
-    this._bank = 0;
+  constructor(options) {
+    this._puzzle = options._puzzle || options.puzzle.toUpperCase().split('');
+    this._category = options._category || options.category;
+    this._guessedLetters = options._guessedLetters || [];
+    this._bank = options._bank || 0;
     this._turnValue = 0;
+    this._completed = options._completed || false;
+    this._won = options._won || false;
+    this._puzzleNum = options._puzzleNum || options.puzzleNum;
   }
 
   get category() {
@@ -17,8 +19,8 @@ class PlayWheel {
     this._puzzle.forEach(letter => {
       if (this._guessedLetters.indexOf(letter) !== -1) {
         puzzle += letter;
-      } else if (letter === ' ') {
-        puzzle += ' ';
+      } else if (letter === ' ' || letter === '-') {
+        puzzle += letter;
       } else {
         puzzle += '*';
       }
@@ -46,27 +48,47 @@ class PlayWheel {
     return this._turnValue;
   }
 
+  get completed() {
+    return this._completed;
+  }
+
+  get won() {
+    return this._won;
+  }
+
+  get puzzleNum() {
+    return this._puzzleNum;
+  }
+
+  get guessedLetters() {
+    return this._guessedLetters;
+  }
+
   guessPuzzle(type, guess) {
     // Check guess
     if (type === 'letter') {
-      if (this.isFound(guess)) {
+      if (this._guessedLetters.indexOf(guess) !== -1) {
+        return 0;
+      } else if (this.isFound(guess)) {
         // Guess is correct
         const result = this._puzzle.filter(letter => letter === guess);
         this._guessedLetters.push(guess);
         return result.length;
       } else {
+        this._guessedLetters.push(guess);
         return -1;
       }
     } else if (type === 'puzzle') {
       const puzzle = this._puzzle.join('');
       if (this.isPuzzle(guess)) {
-        return { won: true, puzzle: puzzle };
+        this._completed = true;
+        this._won = true;
       } else {
-        return {
-          won: false,
-          puzzle: puzzle
-        };
+        this._completed = true;
+        this._won = false;
+        this.emptyBank();
       }
+      return puzzle;
     }
   }
 

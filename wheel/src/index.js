@@ -5,53 +5,84 @@ import PlayWheel from './playwheel';
 let playwheel;
 
 const init = () => {
-  playwheel = new PlayWheel(WheelPuzzles.getRandomPuzzle());
-  PlayWheelUI.startGame(playwheel.puzzle, playwheel.category);
-  PlayWheelUI.updateBank(0);
+  startGame();
   addEventListeners();
+};
+
+const startGame = () => {
+  if (!loadFromLS()) {
+    // IF no current game
+    const newPuzzle = WheelPuzzles.getRandomPuzzle();
+    playwheel = new PlayWheel({
+      puzzle: newPuzzle.puzzle,
+      category: newPuzzle.category,
+      puzzleNum: newPuzzle.puzzleNum
+    });
+    PlayWheelUI.startGame(playwheel.puzzle, playwheel.category);
+    saveCurrentGameToLS();
+  } else {
+    playwheel = new PlayWheel(playwheel);
+    if (playwheel.completed === false) {
+      // Check if game is completed
+      PlayWheelUI.startGame(
+        playwheel.puzzle,
+        playwheel.category,
+        playwheel.bank
+      );
+    }
+  }
+  loadLeaderboardFromLS();
 };
 
 const takeTurn = () => {
   // 1. Spin wheel
-  const spinValue = spinWheel();
+  const spin = spinWheel();
+  const spinValue = spin.value;
+  const spinPos = spin.position;
   playwheel.turnValue = spinValue;
+  //PlayWheelUI.spinWheel(spinPos);
   if (spinValue === 0) {
-    console.log('player went bankrupt');
-    playwheel.bank = 0;
+    playwheel.emptyBank();
     PlayWheelUI.updateBank(playwheel.bank);
-    return false;
+    PlayWheelUI.updateStatus('Oh no, you went bankrupt!');
+    PlayWheelUI.showRespin();
   } else {
     // Go to next step>> Show guess letter form
-    PlayWheelUI.showGuessLetterForm();
+    PlayWheelUI.updateStatus(`You have spun $${spinValue}`);
+    PlayWheelUI.clearTurnOptionsArea();
+    PlayWheelUI.showGuessLetterForm(playwheel.guessedLetters);
   }
 };
 
 const spinWheel = () => {
   const value = WheelValues.getRandomValue();
-  PlayWheelUI.spinWheel(value);
   return value;
 };
 
 const guessALetter = letter => {
   // show dropdown to accept a consonant
-  console.log('You have guessed', letter);
-
   const result = playwheel.guessPuzzle('letter', letter);
 
   if (result > 0) {
     // Guess is correct
-    // Add money to bank
     const total = result * playwheel.turnValue;
-    playwheel.bank += total;
+    playwheel.bank = total;
     PlayWheelUI.updateStatus('You added $' + total + ' to your bank!');
     PlayWheelUI.updateBank(playwheel.bank);
     PlayWheelUI.updatePuzzle(playwheel.puzzle);
+    showEndTurnOptions();
+  } else if (result === 0) {
+    // Letter already guessed
+    PlayWheelUI.updateStatus(
+      `Sorry, you already guessed ${letter}. Spin again!`
+    );
+    PlayWheelUI.showRespin();
   } else {
     // Guess is NOT correct
+    PlayWheelUI.updateStatus(`Sorry, there is no ${letter}. Spin again!`);
+    PlayWheelUI.showRespin();
   }
-
-  // Next step >> Show end turn choices
-  showEndTurnOptions();
+  saveCurrentGameToLS();
 };
 
 const showEndTurnOptions = () => {
@@ -66,19 +97,91 @@ const buyAVowel = vowel => {
   PlayWheelUI.updateBank(playwheel.bank);
   PlayWheelUI.updatePuzzle(playwheel.puzzle);
   PlayWheelUI.showEndTurnOptions(false);
+  saveCurrentGameToLS();
 };
 
 const solvePuzzle = guess => {
-  const isCorrect = playwheel.guessPuzzle('puzzle', guess.toUpperCase());
-  console.log(isCorrect);
-  if (!isCorrect.won) {
-    // lose everything, game over
-    playwheel.emptyBank();
-    PlayWheelUI.updateBank(playwheel.bank);
-    PlayWheelUI.updateStatus(`You lose! The puzzle was ${isCorrect.puzzle}`);
+  const puzzle = playwheel.guessPuzzle('puzzle', guess.toUpperCase());
+  if (playwheel.won) {
+    endGame(true, puzzle);
   } else {
-    // lock in bank, game Over
+    endGame(false, puzzle);
+  }
+};
+
+const endGame = (won, puzzle) => {
+  if (won) {
     PlayWheelUI.updateStatus('You win!');
+    PlayWheelUI.updatePuzzle(puzzle);
+    const gameDeets = {
+      date: new Date(),
+      bank: playwheel.bank,
+      category: playwheel.category,
+      puzzle: playwheel.puzzleNum
+    };
+    saveCompletedGameToLS(gameDeets);
+  } else {
+    PlayWheelUI.updateBank(playwheel.bank);
+    PlayWheelUI.updateStatus(`You lose! The puzzle was ${puzzle}`);
+  }
+  PlayWheelUI.endGame();
+  clearCurrentGameFromLS();
+};
+
+const saveCurrentGameToLS = () => {
+  localStorage.setItem('wheel-current-game', JSON.stringify(playwheel));
+};
+
+const clearCurrentGameFromLS = () => {
+  if (localStorage.getItem('wheel-current-game')) {
+    localStorage.removeItem('wheel-current-game');
+  }
+};
+
+const saveCompletedGameToLS = gameDetails => {
+  const current = JSON.parse(localStorage.getItem('wheel-games'));
+  current.push(gameDetails);
+  localStorage.setItem('wheel-games', JSON.stringify(current));
+  loadLeaderboardFromLS();
+};
+
+const loadLeaderboardFromLS = () => {
+  const wheelGames = JSON.parse(localStorage.getItem('wheel-games'));
+  console.log(typeof wheelGames, wheelGames);
+  //console.log(wheelGames.length);
+  // If there are previous games
+  if (wheelGames === null || wheelGames.length === 0) {
+    // Set an empty array
+    const empty = [];
+    localStorage.setItem('wheel-games', JSON.stringify(empty));
+    PlayWheelUI.showLeaderboard(false);
+  } else {
+    // Sort the games by amount
+    wheelGames.sort((a, b) => {
+      if (a.bank < b.bank) {
+        return 1;
+      }
+      if (a.bank > b.bank) {
+        return -1;
+      }
+      return 0;
+    });
+    // Output leaderboard
+    PlayWheelUI.showLeaderboard(wheelGames);
+  }
+};
+const clearLeaderboardFromLS = () => {
+  if (localStorage.getItem('wheel-games')) {
+    localStorage.removeItem('wheel-games');
+  }
+};
+
+const loadFromLS = () => {
+  if (localStorage.getItem('wheel-current-game')) {
+    playwheel = JSON.parse(localStorage.getItem('wheel-current-game'));
+    return true;
+  } else {
+    return false;
   }
 };
 
@@ -86,22 +189,28 @@ const addEventListeners = () => {
   const elements = PlayWheelUI.getElements();
   const inputAreaEl = elements.inputAreaEl;
   const turnOptionsEl = elements.turnOptionsEl;
+  const btnNewGame = elements.btnNewGame;
+  const btnClearLeaderboard = elements.btnClearLeaderboard;
+
+  btnNewGame.addEventListener('click', e => {
+    clearCurrentGameFromLS();
+    startGame();
+  });
 
   turnOptionsEl.addEventListener('click', e => {
-    console.log('From turn options', e.target.className);
     if (e.target.className === 'wheel-btn-spin') {
       takeTurn();
     } else if (e.target.className === 'wheel-btn-vowel') {
-      console.log('buying a vowel');
       PlayWheelUI.showBuyAVowelForm();
     } else if (e.target.className === 'wheel-btn-solve') {
       PlayWheelUI.showSolvePuzzleForm();
+    } else if (e.target.className === 'wheel-btn-replay') {
+      startGame();
     }
   });
 
   inputAreaEl.addEventListener('click', e => {
     const elements = PlayWheelUI.getElements();
-    console.log('From input area', e.target.className);
     if (e.target.className === 'wheel-btn-guessLetter') {
       guessALetter(elements.txtSelectGuess.value);
     } else if (e.target.className === 'wheel-btn-buyVowel') {

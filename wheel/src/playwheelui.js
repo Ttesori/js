@@ -12,29 +12,36 @@ class PlayWheelUI {
       btnGuess: '<button class="wheel-btn-guess">Guess Letter</button>',
       btnSolve: '<button class="wheel-btn-solve">Solve Puzzle</button>',
       btnVowel: '<button class="wheel-btn-vowel">Buy A Vowel</button>',
+      btnPlayAgain: '<button class="wheel-btn-replay">Play Again?</button>',
       btnSubmitGuess: document.querySelector('.wheel-btn-guessLetter'),
       btnBuyVowel: document.querySelector('.wheel-btn-buyVowel'),
       txtSelectGuess: document.querySelector('.wheel-input-letter'),
       txtSelectVowel: document.querySelector('.wheel-input-vowel'),
       btnSolvePuzzle: document.querySelector('.wheel-btn-solvePuzzle'),
-      txtInputSolve: document.querySelector('.wheel-input-solve')
+      txtInputSolve: document.querySelector('.wheel-input-solve'),
+      btnNewGame: document.querySelector('.wheel-btn-new'),
+      leaderboardContainerEl: document.querySelector('.wheel-game-leaderboard'),
+      leaderboardEl: document.querySelector('.wheel-leaderboard'),
+      btnClearLeaderboard: document.querySelector('.wheel-btn-clearLeaderboard')
     };
   }
 
-  static startGame(maskedPuzzle, category) {
+  static startGame(maskedPuzzle, category, bank = 0) {
     const elements = PlayWheelUI.getElements();
     elements.puzzleTextEl.textContent = maskedPuzzle;
     elements.categoryTextEl.textContent = category;
+    elements.turnOptionsEl.innerHTML = elements.btnSpin;
+    PlayWheelUI.updateStatus('');
+    if (bank > 0) {
+      PlayWheelUI.updateBank(bank);
+    } else {
+      PlayWheelUI.updateBank(0);
+    }
   }
 
   static updatePuzzle(maskedPuzzle) {
     const elements = PlayWheelUI.getElements();
     elements.puzzleTextEl.textContent = maskedPuzzle;
-  }
-
-  static spinWheel(value) {
-    const elements = PlayWheelUI.getElements();
-    elements.statusEl.textContent = `You have spun ${value}`;
   }
 
   static updateStatus(msg, type) {
@@ -48,14 +55,29 @@ class PlayWheelUI {
     bankEl.textContent = '$' + amt;
   }
 
-  static showGuessLetterForm() {
+  static spinWheel(value) {
+    const baseSpin = 720;
+    const spinPos = value * 15;
+    document.querySelector('#wheel').style.transform = `rotate(-${baseSpin +
+      spinPos}deg)`;
+  }
+
+  static showRespin() {
+    const elements = PlayWheelUI.getElements();
+    elements.turnOptionsEl.innerHTML = elements.btnSpin;
+    elements.inputAreaEl.innerHTML = '';
+  }
+
+  static showGuessLetterForm(guessedLetters) {
     const elements = PlayWheelUI.getElements();
     const inputAreaEl = elements.inputAreaEl;
-    const letters = 'bcdfghjklmnpqrstvwxyz'.split('');
-
+    const letters = 'bcdfghjklmnpqrstvwxyz'.toUpperCase().split('');
+    PlayWheelUI.clearTurnOptionsArea();
     let selectBody = '';
     letters.forEach(letter => {
-      selectBody += `<option value="${letter.toUpperCase()}">${letter.toUpperCase()}</option>`;
+      if (guessedLetters.indexOf(letter) === -1) {
+        selectBody += `<option value="${letter}">${letter.toUpperCase()}</option>`;
+      }
     });
     inputAreaEl.innerHTML = `
     <label>Select a Letter</label>
@@ -67,7 +89,7 @@ class PlayWheelUI {
   }
 
   static showSolvePuzzleForm() {
-    console.log('solve puzzle form');
+    PlayWheelUI.clearTurnOptionsArea();
     const elements = PlayWheelUI.getElements();
     const inputAreaEl = elements.inputAreaEl;
     inputAreaEl.innerHTML = `
@@ -100,17 +122,54 @@ class PlayWheelUI {
     const turnOptionsEl = elements.turnOptionsEl;
     elements.inputAreaEl.innerHTML = '';
     turnOptionsEl.innerHTML = '';
+    turnOptionsEl.innerHTML += elements.btnSpin;
+    turnOptionsEl.innerHTML += elements.btnSolve;
     if (canBuyVowel) {
       turnOptionsEl.innerHTML += elements.btnVowel;
     }
-    turnOptionsEl.innerHTML += elements.btnSolve;
-    turnOptionsEl.innerHTML += elements.btnSpin;
+  }
+
+  static endGame() {
+    PlayWheelUI.clearInputArea();
+    PlayWheelUI.clearTurnOptionsArea();
   }
 
   static clearInputArea() {
     const elements = PlayWheelUI.getElements();
     const inputAreaEl = elements.inputAreaEl;
     inputAreaEl.innerHTML = '';
+  }
+
+  static clearTurnOptionsArea() {
+    const turnOptionsEl = PlayWheelUI.getElements().turnOptionsEl;
+    turnOptionsEl.innerHTML = '';
+  }
+
+  static showLeaderboard(games) {
+    const leaderboardEl = PlayWheelUI.getElements().leaderboardEl;
+    if (!games || games.length === 0) {
+      PlayWheelUI.getElements().leaderboardEl.innerHTML =
+        '<p>Complete games to add them to your personal leaderboard.</p>';
+      return false;
+    }
+    let gamesHTML = '';
+    games.forEach(game => {
+      const date = new Date(game.date);
+      const prettyDate = `${date.getMonth() +
+        1}/${date.getDate()}/${date.getUTCFullYear()}`;
+      gamesHTML += `
+      <tr><td>${prettyDate}</td><td>$${game.bank} </td><td>${game.category} #${
+        game.puzzle
+      }</td></tr>
+      `;
+    });
+    const headerRowHTML =
+      '<thead><tr><th>Date</th><th>Bank</th><th>Puzzle</th></tr></thead>';
+    leaderboardEl.innerHTML = `
+    <table>
+    ${headerRowHTML}
+    <tbody>${gamesHTML}</tbody>
+    </table>`;
   }
 }
 
