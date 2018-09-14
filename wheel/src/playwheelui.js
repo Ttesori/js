@@ -22,16 +22,22 @@ class PlayWheelUI {
       btnNewGame: document.querySelector('.wheel-btn-new'),
       leaderboardContainerEl: document.querySelector('.wheel-game-leaderboard'),
       leaderboardEl: document.querySelector('.wheel-leaderboard'),
-      btnClearLeaderboard: document.querySelector('.wheel-btn-clearLeaderboard')
+      btnClearLeaderboard: document.querySelector(
+        '.wheel-btn-clearLeaderboard'
+      ),
+      wheelModalEl: document.querySelector('.wheel-modal'),
+      btnWheelModalClose: document.querySelector('.wheel-modal-close'),
+      btnWheelModalSpin: document.querySelector('.wheel-modal-spin'),
+      wheelEl: document.querySelector('.wheel-img')
     };
   }
 
   static startGame(maskedPuzzle, category, bank = 0) {
     const elements = PlayWheelUI.getElements();
-    elements.puzzleTextEl.textContent = maskedPuzzle;
+    this.updatePuzzle(maskedPuzzle);
     elements.categoryTextEl.textContent = category;
     elements.turnOptionsEl.innerHTML = elements.btnSpin;
-    PlayWheelUI.updateStatus('');
+    PlayWheelUI.updateStatus('&nbsp;');
     if (bank > 0) {
       PlayWheelUI.updateBank(bank);
     } else {
@@ -41,13 +47,24 @@ class PlayWheelUI {
 
   static updatePuzzle(maskedPuzzle) {
     const elements = PlayWheelUI.getElements();
-    elements.puzzleTextEl.textContent = maskedPuzzle;
+    const maskedPuzzleLetters = maskedPuzzle.split('');
+    let maskedPuzzleHTML = '<span class="word">';
+    maskedPuzzleLetters.forEach(letter => {
+      if (letter === ' ') {
+        maskedPuzzleHTML += `</span><span class="space">${letter}</span><span class="word">`;
+      } else if (letter === '*') {
+        maskedPuzzleHTML += `<span class="masked">${letter}</span>`;
+      } else {
+        maskedPuzzleHTML += `<span class="letter">${letter}</span>`;
+      }
+    });
+    elements.puzzleTextEl.innerHTML = maskedPuzzleHTML + '</span>';
   }
 
-  static updateStatus(msg, type) {
+  static updateStatus(msg) {
     const elements = PlayWheelUI.getElements();
-    elements.statusEl.className = 'wheel-game-status game-status-' + type;
-    elements.statusEl.textContent = msg;
+    //elements.statusEl.className = 'wheel-game-status game-status-' + type;
+    elements.statusEl.innerHTML = msg;
   }
 
   static updateBank(amt) {
@@ -56,23 +73,28 @@ class PlayWheelUI {
   }
 
   static spinWheel(value) {
+    const wheelImgEl = this.getElements().wheelEl;
+    this.showWheelModal();
     const baseSpin = 720;
     const spinPos = value * 15;
-    document.querySelector('#wheel').style.transform = `rotate(-${baseSpin +
-      spinPos}deg)`;
+    wheelImgEl.style.transform = `rotate(-${baseSpin + spinPos}deg)`;
+  }
+
+  static resetWheel() {
+    const wheelImgEl = this.getElements().wheelEl;
+    wheelImgEl.style.transform = `rotate(0deg)`;
   }
 
   static showRespin() {
     const elements = PlayWheelUI.getElements();
     elements.turnOptionsEl.innerHTML = elements.btnSpin;
-    elements.inputAreaEl.innerHTML = '';
   }
 
   static showGuessLetterForm(guessedLetters) {
     const elements = PlayWheelUI.getElements();
-    const inputAreaEl = elements.inputAreaEl;
+    const inputAreaEl = elements.turnOptionsEl;
     const letters = 'bcdfghjklmnpqrstvwxyz'.toUpperCase().split('');
-    PlayWheelUI.clearTurnOptionsArea();
+    //PlayWheelUI.clearTurnOptionsArea();
     let selectBody = '';
     letters.forEach(letter => {
       if (guessedLetters.indexOf(letter) === -1) {
@@ -91,7 +113,7 @@ class PlayWheelUI {
   static showSolvePuzzleForm() {
     PlayWheelUI.clearTurnOptionsArea();
     const elements = PlayWheelUI.getElements();
-    const inputAreaEl = elements.inputAreaEl;
+    const inputAreaEl = elements.turnOptionsEl;
     inputAreaEl.innerHTML = `
     <input type="text" class="wheel-input-solve">
     <button class="wheel-btn-solvePuzzle">Solve Puzzle</button>
@@ -101,7 +123,7 @@ class PlayWheelUI {
   static showBuyAVowelForm() {
     console.log('buy a vowel form');
     const elements = PlayWheelUI.getElements();
-    const inputAreaEl = elements.inputAreaEl;
+    const inputAreaEl = elements.turnOptionsEl;
     const letters = 'aeiou'.split('');
 
     let selectBody = '';
@@ -120,7 +142,6 @@ class PlayWheelUI {
   static showEndTurnOptions(canBuyVowel) {
     const elements = PlayWheelUI.getElements();
     const turnOptionsEl = elements.turnOptionsEl;
-    elements.inputAreaEl.innerHTML = '';
     turnOptionsEl.innerHTML = '';
     turnOptionsEl.innerHTML += elements.btnSpin;
     turnOptionsEl.innerHTML += elements.btnSolve;
@@ -129,15 +150,28 @@ class PlayWheelUI {
     }
   }
 
+  static showWheelModal() {
+    const elements = PlayWheelUI.getElements();
+    const wheelModalEl = elements.wheelModalEl;
+    wheelModalEl.style.display = 'block';
+  }
+
+  static hideWheelModal() {
+    const elements = PlayWheelUI.getElements();
+    const wheelModalEl = elements.wheelModalEl;
+    wheelModalEl.style.display = 'none';
+    PlayWheelUI.resetWheel();
+  }
+
   static endGame() {
-    PlayWheelUI.clearInputArea();
+    //PlayWheelUI.clearInputArea();
     PlayWheelUI.clearTurnOptionsArea();
   }
 
   static clearInputArea() {
-    const elements = PlayWheelUI.getElements();
-    const inputAreaEl = elements.inputAreaEl;
-    inputAreaEl.innerHTML = '';
+    //const elements = PlayWheelUI.getElements();
+    //const inputAreaEl = elements.inputAreaEl;
+    //inputAreaEl.innerHTML = '';
   }
 
   static clearTurnOptionsArea() {

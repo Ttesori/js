@@ -2,6 +2,7 @@ import WheelValues from './wheelvalues';
 import WheelPuzzles from './wheelpuzzles';
 import PlayWheelUI from './playwheelui';
 import PlayWheel from './playwheel';
+import playwheelui from './playwheelui';
 let playwheel;
 
 const init = () => {
@@ -40,7 +41,7 @@ const takeTurn = () => {
   const spinValue = spin.value;
   const spinPos = spin.position;
   playwheel.turnValue = spinValue;
-  //PlayWheelUI.spinWheel(spinPos);
+  PlayWheelUI.spinWheel(spinPos);
   if (spinValue === 0) {
     playwheel.emptyBank();
     PlayWheelUI.updateBank(playwheel.bank);
@@ -187,10 +188,9 @@ const loadFromLS = () => {
 
 const addEventListeners = () => {
   const elements = PlayWheelUI.getElements();
-  const inputAreaEl = elements.inputAreaEl;
   const turnOptionsEl = elements.turnOptionsEl;
   const btnNewGame = elements.btnNewGame;
-  const btnClearLeaderboard = elements.btnClearLeaderboard;
+  const wheelModalEl = elements.wheelModalEl;
 
   btnNewGame.addEventListener('click', e => {
     clearCurrentGameFromLS();
@@ -198,20 +198,16 @@ const addEventListeners = () => {
   });
 
   turnOptionsEl.addEventListener('click', e => {
+    const elements = PlayWheelUI.getElements();
     if (e.target.className === 'wheel-btn-spin') {
-      takeTurn();
+      PlayWheelUI.showWheelModal();
     } else if (e.target.className === 'wheel-btn-vowel') {
       PlayWheelUI.showBuyAVowelForm();
     } else if (e.target.className === 'wheel-btn-solve') {
       PlayWheelUI.showSolvePuzzleForm();
     } else if (e.target.className === 'wheel-btn-replay') {
       startGame();
-    }
-  });
-
-  inputAreaEl.addEventListener('click', e => {
-    const elements = PlayWheelUI.getElements();
-    if (e.target.className === 'wheel-btn-guessLetter') {
+    } else if (e.target.className === 'wheel-btn-guessLetter') {
       guessALetter(elements.txtSelectGuess.value);
     } else if (e.target.className === 'wheel-btn-buyVowel') {
       buyAVowel(elements.txtSelectVowel.value);
@@ -219,6 +215,20 @@ const addEventListeners = () => {
       solvePuzzle(elements.txtInputSolve.value);
     }
   });
+  wheelModalEl.addEventListener('click', e => {
+    console.log(e);
+    if (e.target.classList.contains('wheel-modal-close')) {
+      PlayWheelUI.hideWheelModal();
+    } else if (e.target.classList.contains('wheel-modal-spin')) {
+      takeTurn();
+      setTimeout(PlayWheelUI.hideWheelModal, 7000);
+      console.log('spinning wheel');
+    }
+  });
+
+  //inputAreaEl.addEventListener('click', e => {
+  //const elements = PlayWheelUI.getElements();
+  //});
 };
 
 init();

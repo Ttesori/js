@@ -5,33 +5,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
   <link rel="stylesheet" href="css/main.css">
   <title>Wheel of Fortune</title>
 </head>
 
 <body>
-  <h1>Wheel of Fortune</h1>
-  <div class="wheel-game">
-    <div class="wheel-game-puzzle">
-      <div class="wheel-puzzle-text"></div>
-      <div class="wheel-puzzle-category"></div>
+  <header class="jumbotron">
+    <div class="container text-center">
+      <h1>Wheel of Fortune</h1>
     </div>
-    <div class="wheel-game-bank"></div>
-    <div class="wheel-game-status"></div>
-    <div class="wheel-game-turn-options">
-      <button class="wheel-btn-spin">Spin Wheel</button>
-    </div>
-    <div class="wheel-game-input"></div>
-    <button class="wheel-btn-new">Start New Game</button>
-    <div class="wheel-game-leaderboard">
-      <section class="wheel-leaderboard"></section>
+
+  </header>
+  <div class="container">
+
+
+    <main class="wheel-game row mb-5">
+      <div class="col col-sm-12">
+        <div class="row">
+          <div class="wheel-game-puzzle">
+            <div class="wheel-puzzle-text"></div>
+            <div class="wheel-puzzle-category"></div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="wheel-game-bank col col-sm-4"></div>
+          <div class="wheel-game-status col col-sm-8">Status</div>
+        </div>
+        <div class="row">
+          <div class="wheel-game-turn-options col col-sm-12">
+            <button class="wheel-btn-spin">Spin Wheel</button>
+          </div>
+        </div>
+
+      </div>
+
+  </div>
+
+
+
+  </div>
+
+  <div class="modal wheel-modal">
+    <div class="modal-content">
+      <div class="wheel-game-wheel">
+        <span class="wheel-wheel-triangle">&#9662;</span>
+        <img src="img/wheel.svg" class="wheel-img">
+        <button type="button" class="btn btn-secondary wheel-modal-close">Close</button>
+        <button type="button" class="btn btn-secondary wheel-modal-spin">Spin Wheel</button>
+      </div>
     </div>
   </div>
 
   <!-- <div id="wheel-container">
-    <span id="triangle">&#9662;</span>
-    <div id="wheel"></div>
-  </div> -->
+          <span id="triangle">&#9662;</span>
+          <div id="wheel"></div>
+        </div> -->
+
+  <aside class="container">
+    <button class="wheel-btn-new">Start New Game</button>
+    <div class="wheel-game-leaderboard">
+      <section class="wheel-leaderboard"></section>
+    </div>
+  </aside>
+
+
+
+
+  </main>
+
 
 
   <script src="scripts/bundle.js"></script>

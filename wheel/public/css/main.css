@@ -1,7 +1,106 @@
+body {
+  background: #00695c;
+}
+
+.jumbotron {
+  background: #004d40;
+  color: #fff;
+}
+
+.wheel-game-puzzle {
+  background: teal;
+  width: 100%;
+  height: 100%;
+  color: #fff;
+  padding: 2rem;
+  text-align: center;
+  border: 2px solid white;
+}
+
+.wheel-game-puzzle .wheel-puzzle-text {
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+
+.wheel-game-puzzle .wheel-puzzle-text .word {
+  display: inline-block;
+}
+
+.wheel-game-puzzle .wheel-puzzle-text .word span {
+  display: inline-block;
+  width: 3.5rem;
+  background: white;
+  color: black;
+  padding: 0.25rem 0.5rem;
+  border: 3px solid tan;
+  margin-bottom: 0.5rem;
+  margin-right: 0.25rem;
+}
+
+.wheel-game-puzzle .wheel-puzzle-text .word span.space {
+  color: transparent;
+  background: transparent;
+  border: none;
+}
+
+.wheel-game-puzzle .wheel-puzzle-text .word span.masked {
+  color: white;
+}
+
+.wheel-game {
+  text-align: center;
+}
+
+.wheel-game .wheel-game-bank {
+  background: #ccc;
+  padding: 1rem;
+}
+
+.wheel-game .wheel-game-status {
+  background: #ccc;
+  padding: 1rem;
+}
+
+.wheel-game-turn-options {
+  background: #ddd;
+  padding: 1rem;
+}
+
+.wheel-game-input {
+  background: #ddd;
+  padding: 1rem;
+}
+
+.wheel-game button[class*='wheel-btn'] {
+  background: white;
+}
+
+.wheel-modal {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.wheel-modal .wheel-game-wheel {
+  -webkit-transition: all 5s;
+  transition: all 5s;
+}
+
+.wheel-modal .modal-content {
+  top: 2rem;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.wheel-modal .wheel-img {
+  -webkit-transition: all 5s;
+  transition: all 5s;
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+
 #wheel-container {
   position: relative;
-  width: 500px;
-  height: 500px;
+  max-width: 500px;
+  max-height: 500px;
 }
 
 #wheel-container #wheel {
