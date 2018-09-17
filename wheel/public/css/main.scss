@@ -16,12 +16,21 @@ body {
   text-align: center;
   border: 2px solid white;
 
+  .wheel-puzzle-category {
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    border: 1px solid #fff;
+    margin: 2rem auto 0;
+    width: 50%;
+  }
+
   .wheel-puzzle-text {
     font-size: 2rem;
     letter-spacing: 2px;
 
     .word {
       display: inline-block;
+      margin-right: 2rem;
       span {
         display: inline-block;
         width: 3.5rem;
@@ -82,14 +91,24 @@ body {
   .wheel-game-wheel {
     transition: all 5s;
   }
+
+  .wheel-wheel-triangle {
+    font-size: 4rem;
+    position: absolute;
+    left: calc(50% - 15px);
+    z-index: 1500;
+    top: -40px;
+  }
   .modal-content {
     top: 2rem;
     width: 50%;
     margin: 0 auto;
+    max-height: 650px;
   }
   .wheel-img {
     transition: all 5s;
     transform: rotate(0deg);
+    max-height: 600px;
   }
 }
 

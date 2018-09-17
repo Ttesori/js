@@ -200,7 +200,7 @@ class PlayWheelUI {
     const headerRowHTML =
       '<thead><tr><th>Date</th><th>Bank</th><th>Puzzle</th></tr></thead>';
     leaderboardEl.innerHTML = `
-    <table>
+    <table class="table">
     ${headerRowHTML}
     <tbody>${gamesHTML}</tbody>
     </table>`;

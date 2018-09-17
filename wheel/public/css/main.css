@@ -17,6 +17,14 @@ body {
   border: 2px solid white;
 }
 
+.wheel-game-puzzle .wheel-puzzle-category {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  border: 1px solid #fff;
+  margin: 2rem auto 0;
+  width: 50%;
+}
+
 .wheel-game-puzzle .wheel-puzzle-text {
   font-size: 2rem;
   letter-spacing: 2px;
@@ -24,6 +32,7 @@ body {
 
 .wheel-game-puzzle .wheel-puzzle-text .word {
   display: inline-block;
+  margin-right: 2rem;
 }
 
 .wheel-game-puzzle .wheel-puzzle-text .word span {
@@ -84,10 +93,19 @@ body {
   transition: all 5s;
 }
 
+.wheel-modal .wheel-wheel-triangle {
+  font-size: 4rem;
+  position: absolute;
+  left: calc(50% - 15px);
+  z-index: 1500;
+  top: -40px;
+}
+
 .wheel-modal .modal-content {
   top: 2rem;
   width: 50%;
   margin: 0 auto;
+  max-height: 650px;
 }
 
 .wheel-modal .wheel-img {
@@ -95,6 +113,7 @@ body {
   transition: all 5s;
   -webkit-transform: rotate(0deg);
           transform: rotate(0deg);
+  max-height: 600px;
 }
 
 #wheel-container {
